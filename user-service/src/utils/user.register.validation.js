@@ -28,4 +28,14 @@ const userRegisterValidation = (data) => {
     return schema.validate(data, { abortEarly: false }); 
 };
 
-module.exports = { userRegisterValidation };
+
+
+function loginValidation(data){
+    const loginSchema = joi.object({
+        email:joi.string().email().required(),
+        password:joi.string().required()
+    })
+    return loginSchema.validate(data)
+}
+
+module.exports = { userRegisterValidation,loginValidation };
