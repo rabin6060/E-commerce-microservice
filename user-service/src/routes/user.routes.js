@@ -1,5 +1,5 @@
 const express = require('express');
-const { register } = require('../controllers/user.controller');
+const { register, login } = require('../controllers/user.controller');
 const multer = require('multer');
 const { logger } = require('../utils/logger');
 
@@ -27,5 +27,7 @@ router.post('/register', (req, res, next) => {
     next();
   });
 }, register);
+
+router.post('/login',login)
 
 module.exports = router;
