@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    accessToken:{
+        type:String
+    },
     role:{
         type:String,
         default:'User',
@@ -42,10 +45,15 @@ userSchema.pre('save',async function(next){
     }
 })
 
-userSchema.methods.comparePassword=async function (password){
 
-    await argon.verify(user.password,password)
+userSchema.methods.comparePassword = async function (password){
+    try {
+       return await argon.verify(this.password,password)
+    } catch (error) {
+        throw error
+    }
 }
+
 
 const userModel = mongoose.model('User',userSchema)
 module.exports = userModel
