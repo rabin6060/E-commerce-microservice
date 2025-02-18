@@ -16,4 +16,11 @@ const upload = async(image)=>{
         }).end(image.buffer)
     })
 }
-module.exports = {upload}
+const deleteImage = async(publicId)=>{
+    await cloudinary.uploader.destroy(publicId)
+    .then((result)=>{
+        logger.info("profile pic deleted",result)
+    }).catch(error=>logger.error("profile pic deletion failed",error.stack))
+}
+
+module.exports = {upload,deleteImage}
