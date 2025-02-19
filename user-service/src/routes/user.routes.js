@@ -1,7 +1,8 @@
 const express = require('express');
-const { register, login, logout } = require('../controllers/user.controller');
+const { register, login, logout, deleteUser, editUserProfile } = require('../controllers/user.controller');
 const multer = require('multer');
-const { logger } = require('../utils/logger');
+const { validateJwt } = require('../middlewares/jwtValidate');
+const { multerMiddleware } = require('../middlewares/multer');
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -10,25 +11,13 @@ const upload = multer({
 
 const router = express.Router();
 
-router.post('/register', (req, res, next) => {
-  req.on('close', () => {
-    logger.warn('Client disconnected during file upload');
-  });
-  upload(req, res, (err) => {
-    if (err) {
-      logger.error("Upload error:", err.message);
-      return res.status(400).json({ success: false, message: err.message });
-    }
-
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
-
-    next();
-  });
-}, register);
+router.post('/register', multerMiddleware, register);
 
 router.post('/login',login)
-router.post('/logout',logout)
+router.post('/logout',validateJwt,logout)
+
+router.patch('/edit',validateJwt, multerMiddleware,editUserProfile)
+
+router.delete('/delete',validateJwt,deleteUser)
 
 module.exports = router;
