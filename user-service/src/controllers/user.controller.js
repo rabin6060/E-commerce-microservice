@@ -32,7 +32,7 @@ const register = async(req,res,next)=>{
         }
         const result = await upload(req.file)
         
-       const newuser = await User.create({...req.body,profilePic:result.secure_url,profilePicId:result.public_id})
+       const newuser = await User.create({...req.body,profilePic:result.secure_url,profilePicId:result.public_id}).select('-password -accessToken -__v')
        res.status(200).json({success:true,newuser})
     } catch (error) {
         logger.error('registration failed',error.message)
@@ -101,10 +101,49 @@ const logout = async(req,res,next)=>{
     }
 }
 
+const getAllUsers = async(req,res,next)=>{
+    logger.info("fetch all users started...")
+    try {
+        
+        const users = await User.find().select('-password -accessToken -__v')
+        if(!users) return res.status(404).json({
+            success:false,
+            message:"no users found"
+        })
+        res.status(200).json({success:true,users:users})
+    } catch (error) {
+        logger.error('fetching all users failed',error.message)
+        next(error)
+        return res.status(500).json({
+            success:false,
+            message:'Users fetching failed'
+        })
+    }
+}
+
+const getme = async(req,res,next)=>{
+    logger.info("fetch single user started...")
+    try {
+        const {id} = req.params
+        if (id!==req.user.userId) {
+            return res.status(401).json("you cannot get others info")
+        }
+        const user = await User.findById(req.user.userId).select('-password -accessToken -__v')
+        res.status(200).json({success:true,user:user})
+    } catch (error) {
+        logger.error('fetching single user failed',error.message)
+        next(error)
+        return res.status(500).json({
+            success:false,
+            message:'User fetching failed'
+        })
+    }
+}
+
 const editUserProfile = async(req,res)=>{
     logger.info("user edit started...")
     try {
-        const user = await User.findById(req.user.userId)
+        const user = await User.findById(req.user.userId).select('-password -accessToken -__v')
             if (!user) {
                 return res.status(400).json({
                     success:false,
@@ -166,4 +205,4 @@ const deleteUser = async(req,res)=>{
 
 
 
-module.exports = {register,login,logout,deleteUser,editUserProfile}
+module.exports = {register,login,logout,deleteUser,editUserProfile,getAllUsers,getme}
