@@ -13,7 +13,7 @@ const productValidation = (data) => {
         price: joi.number().min(0).required(),
         totalStock:joi.number().min(0).required(),
         isAvailable:joi.boolean().optional(),
-        imageUrls:joi.array().items(imageSchema).required()
+        imageUrls:joi.array().items(imageSchema).min(1).required()
     });
    
 
