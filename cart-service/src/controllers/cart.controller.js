@@ -1,7 +1,7 @@
 
 const { logger } = require("../utils/logger")
 const Redis = require('ioredis');
-const { consumeProductInfo } = require("../utils/rabbitmq.connection");
+const { consumeProductInfo, publishCartInfo } = require("../utils/rabbitmq.connection");
 const Cart = require("../models/cart.models");
 const { cartValidation, cartEditValidation } = require("../utils/cart.validation");
 
@@ -23,26 +23,26 @@ const addCart = async(req,res)=>{
                 message: "User ID not found in cache, please log in again",
             });
         }
-        const {price,quantity,productId,totalStock} = req.body
-        if (quantity>totalStock) {
-            return res.status(400).json({
-                success:false,
-                message:"total Stock reached"
-            })
-        }
+        const {price,quantity,productId} = req.body
         const totalAmount =price * quantity
-        const cartItemData = {price,quantity,productId,totalStock}
+        const cartItemData = {price,quantity,productId}
         const newBody = {cartItems:[cartItemData],userId:userId,totalAmount:parseInt(totalAmount)}
-        console.log(newBody)
-        const {error} = cartValidation(newBody)
-        if (error) {
-            logger.warn("validation failed",error.details[0].message)
-            return res.status(400).json({
-                success:false,
-                message:error.details[0].message
-            })
-        }
-        let cartItem = await Cart.findOne({userId:userId})
+        let cartItem = await Cart.findOne({
+            userId:userId,
+        })
+
+        
+        
+        const {error} = cartValidation(newBody,(cartItem ? cartItem.cartItems:[]))
+            if (error) {
+                logger.warn("validation failed",error.details[0].message)
+                return res.status(400).json({
+                    success:false,
+                    message:error.details[0].message
+                })
+            }
+        
+        // console.log(newBody)
         if (cartItem) {
             cartItem?.cartItems.push(cartItemData)
             cartItem.totalAmount =(cartItem.totalAmount || 0) + price * quantity
@@ -51,7 +51,12 @@ const addCart = async(req,res)=>{
             cartItem = new Cart(newBody)
             await cartItem.save()
         }
-        
+        const message = {
+            productId:productId,
+            quantity:quantity
+        }
+    
+        await publishCartInfo('cart_created',message)
         
        res.status(201).json({
         success:true,
@@ -69,70 +74,6 @@ const addCart = async(req,res)=>{
 const getAllCarts = async(req,res)=>{
     logger.info("fetch all carts started...")
     try {
-        const removeCartItem = async(req,res)=>{
-            logger.info("remove cart items started..")
-            try {
-                const {id} = req.params
-                const {action} = req.query
-                const {productId,price,quantity} = req.body
-        
-                const {error} = cartEditValidation(req.body)
-                if (error) {
-                    logger.warn("validation failed",error.details[0].message)
-                    return res.status(400).json({
-                        success:false,
-                        message:error.details[0].message
-                    })
-                }
-                
-                let cart = await Cart.findById(id)
-                if (!cart) {
-                    return res.status(404).json({
-                        success:false,
-                        message:"cart does not exist"
-                    })
-                }
-                cart.cartItems.forEach(cartI=>{
-                    if ((quantity === cartI.quantity) && (action==='rem')) {
-                        //remove item from cart
-                        cart.cartItems = cart.cartItems.filter(cartItem=>cartItem.productId!==productId)
-        
-                    }else{
-                        //increase or decrease cartItem
-                        cart.cartItems = cart.cartItems.map(cartItem=>{
-                            if (cartItem.productId===productId) {
-                                if((quantity <= cartItem.totalStock)){
-                                    cartItem.quantity = quantity
-                                }else if(quantity > cartItem.totalStock){
-                                    return res.status(200).json({
-                                        success:false,
-                                        message:"total Stock reached"
-                                    })
-                                }
-                            }
-                        })
-                    }
-                })
-                if((action==='dec')|| (action==='rem')){
-                    cart.totalAmount = cart.totalAmount - quantity * price
-                }else if(action==='inc'){
-                    cart.totalAmount = cart.totalAmount + quantity * price
-                }
-                
-               
-             //   await cart.save()
-                return res.status(200).json({
-                    success:true,
-                    cart
-                })
-            } catch (error) {
-                logger.error('cart remove failed',error)
-                return res.status(500).json({
-                    success:false,
-                    message:'cart remove failed'
-                })
-            }
-        }
         const cachedKey = 'carts'
         const cachedProducts = await redisClient.get(cachedKey)
         if (cachedProducts) {
@@ -187,17 +128,18 @@ const removeCartItem = async(req,res)=>{
         }else{
             const oldQuantity = cartItem.quantity
             cartItem.quantity = quantity
-
             if (action==='dec') {
                 cart.totalAmount -= (oldQuantity - quantity)*price
             }else if(action==='inc'){
                 cart.totalAmount += (quantity - oldQuantity)*price
             }
         }
-
-        
-       
         await cart.save()
+        const message = {
+            productId:productId,
+            quantity:quantity
+        }
+        await publishCartInfo('cart_updated',message)
         return res.status(200).json({
             success:true,
             cart

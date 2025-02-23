@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const cartItemSchema = new mongoose.Schema({
     productId:{
         type:String,
-        required:true
+        unique:true,
+        required:true,
     },
     price:{
         type:Number,
@@ -13,10 +14,6 @@ const cartItemSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
-    totalStock:{
-        type:Number,
-        required:true
-    }
 },{_id:false})
 
 const cartSchema = new mongoose.Schema({

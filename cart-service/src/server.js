@@ -10,6 +10,7 @@ const { RedisStore} = require('rate-limit-redis')
 const cartRouter = require('./routes/cart.routes')
 const { dbConnection } = require('./utils/db.connection')
 const { rabbitConnection, consumeProductInfo } = require('./utils/rabbitmq.connection')
+const { consumeUserInfo } = require('../../product-service/src/utils/rabbitmq.connection')
 
 const app = express()
 const port = process.env.PORT || 3003
@@ -55,6 +56,7 @@ app.use('/api/cart',cartRouter)
 app.listen(port,async ()=>{
     await dbConnection()
     await rabbitConnection()
+    await consumeUserInfo('user_created')
     await consumeProductInfo('product_created')
     logger.info(`cart-service server running at port ${process.env.PORT}`)
 })

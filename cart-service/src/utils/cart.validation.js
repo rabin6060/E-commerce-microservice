@@ -1,10 +1,20 @@
 const joi = require('joi');
 
-const cartValidation = (data) => {
+const cartValidation = (data,existingCartItem=[]) => {
+   
     const cartItemSchema  = joi.object({
-        productId:joi.string().required(),
+        productId:joi.string().required()
+        .custom((value, helpers) => {
+            // Check if productId already exists in existingCartItems
+            const isDuplicate = existingCartItem.some(
+              (item) => item.productId === value
+            );
+            if (isDuplicate) {
+              return helpers.message( 'productId must be unique in the cart')
+            }
+            return value; // Return the value if valid
+          }, 'unique productId check'),
         price:joi.number().required(),
-        totalStock:joi.number().required(),
         quantity:joi.number().required(),
         
     })
