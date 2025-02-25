@@ -1,0 +1,29 @@
+<header>
+    <nav>
+        <div class="first" routerLink="">
+            <img src="https://marketplace.canva.com/EAGSKGkgjSE/1/0/1600w/canva-blue-and-green-flat-typographic-e-commerce-online-shop-logo-HWrZrGzVSvk.jpg" alt="logo">
+        </div>
+        <div class="middle">
+                <div class="inner">
+                    <div class="input-part">
+                        <input type="text" name="search" id="search" placeholder="search by title">
+                    </div>
+                    <div class="logo-part">
+                        <span>
+                            <mat-icon>search</mat-icon>
+                        </span>
+                    </div>
+                </div>
+                
+        </div>
+        <div class="last">
+            @if(token()?.length){
+                <button routerLink="login" class="button-nav">Login</button>
+                <button routerLink="login" class="button-nav">Signup</button> 
+            }@else{
+                <button class="button-nav">Logout</button>
+            }
+              
+        </div>
+    </nav>
+</header>

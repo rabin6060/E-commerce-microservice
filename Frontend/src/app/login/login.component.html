@@ -1,0 +1,17 @@
+<div class="login">
+    <div class="login-body">
+        <h1>Login Form</h1>
+        <form [formGroup]="userInfo" (ngSubmit)="onSubmit()">
+            <div class="email">
+                <label for="email">Email:</label>
+                <input id="email" type="text" placeholder="eg. text@gmail.com" formControlName="email">
+            </div>
+            <div class="password">
+                <label for="password">Password:</label>
+                <input id="password" type="password" placeholder="eg. text123" formControlName="password">
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p>{{getUserInfo().message}}</p>
+    </div>
+</div>
