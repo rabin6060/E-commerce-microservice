@@ -18,10 +18,12 @@
         </div>
         <div class="last">
             @if(token()?.length){
+                <span>{{user().username}}</span>
+                <button class="button-nav" (click)="logout()">Logout</button>
+            }@else{
+                
                 <button routerLink="login" class="button-nav">Login</button>
                 <button routerLink="login" class="button-nav">Signup</button> 
-            }@else{
-                <button class="button-nav">Logout</button>
             }
               
         </div>
