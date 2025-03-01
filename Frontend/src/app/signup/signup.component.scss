@@ -1,0 +1,60 @@
+.signup{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 50px;
+    .signup-body{
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        h1{
+            font-size: 46px;
+            color:rgb(136, 136, 247);
+        }
+        form{
+            min-width: 50%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            .email,.password,.username,.firstName,.lastName,.profilePic{
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                font-size: 24px;
+                font-weight: 700;
+                color: rgb(136, 136, 247);;
+                input{
+                    padding: 15px;
+                    border-radius: 5px;
+                    color: rgb(100, 100, 253);
+                    font-size: 18px;
+                    border: 1px solid rgb(136, 136, 247);
+
+                    &::placeholder{
+                        color: rgb(136, 136, 247);
+                    }
+                }
+            }
+            button{
+                padding: 15px;
+                border-radius: 5px;
+                background-color: rgb(136, 136, 247);
+                border: none;
+                font-size: 18px;
+                color: white;
+                cursor: pointer;
+
+                &:hover{
+                    background-color: rgb(100, 100, 253);
+                }
+            }
+        }
+    }
+}
