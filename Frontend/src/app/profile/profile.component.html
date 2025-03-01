@@ -1,0 +1,31 @@
+<div class="profile">
+    <div class="profile-body">
+        
+        <form [formGroup]="editUserInfo" (ngSubmit)="onSubmit()">
+            <div class="user-image">
+                <img [src]="userInfo().profilePic" alt="profile picture">
+                <input type="file" name="profilePic" id="profilePic"
+                (change)="fileChange($event)" accept="image/*">
+                <Label for="profilePic"><mat-icon>edit</mat-icon></Label>
+                
+            </div>
+            
+            <div class="form-item">
+                <Label for="username">Username: </Label>
+                <input type="text" name="username" id="username"    formControlName="username">
+                <span (click)="onEditClick('username')"><mat-icon>edit</mat-icon></span>
+            </div>
+            <div class="form-item">
+                <Label for="firstName">Firstname: </Label>
+                <input type="text" [class.show]="focus()" name="firstName" id="firstName"  formControlName="firstName">
+                <span (click)="onEditClick('firstName')"><mat-icon>edit</mat-icon></span>
+            </div>
+            <div class="form-item">
+                <Label for="lastName">Lastname: </Label>
+                <input type="text" name="lastName" id="lastName" formControlName="lastName">
+                <span (click)="onEditClick('lastName')"><mat-icon>edit</mat-icon></span>
+            </div>
+            <button class="button-edit">Edit Profile</button>
+        </form>
+    </div>
+</div>
