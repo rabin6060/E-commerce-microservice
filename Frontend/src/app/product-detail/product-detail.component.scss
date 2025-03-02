@@ -1,0 +1,50 @@
+.product-detail{
+    width: 100%;
+    height: 100%;
+    .product-detail-body{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .images{
+            height: 100%;
+            background: red;
+            width: 50%;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+           overflow: hidden;
+           .first{
+            grid-column: 1/3;
+            grid-row:1/4;
+            overflow:hidden;
+            background: #000;
+           }
+           .second{
+            grid-column: 3/4;
+            grid-row:1/2;
+            overflow: hidden;
+            img{
+                object-fit: contain;
+            }
+           }
+           .third{
+            grid-column: 3/4;
+            grid-row:2/3;
+            overflow: hidden;
+           }
+           .fourth{
+            grid-column: 3/4;
+            grid-row:3/4;
+            overflow: hidden;
+           }
+        }
+        .content{
+            background: yellow;
+            width: 50%;
+            height: 100%;
+        }
+
+    }
+}
