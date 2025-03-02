@@ -1,7 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthserviceService } from '../services/authservice.service';
-import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,29 +9,57 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   userInfo = new FormGroup({
     email:new FormControl(''),
     password: new FormControl('')
   })
 
   constructor(private auth:AuthserviceService,private router:Router){}
-  onSubmit(){
-    if (this.userInfo.valid) {
-      const loginData = this.userInfo.value as {email:string,password:string}
-      this.auth.login(loginData).subscribe({
-        next:(value:any)=> {
-          this.auth.setResponse(value)
-          localStorage.setItem('token',value.accessToken)
-          this.router.navigate(['/'])
-        },
-        error:(err:any)=>{
-          this.auth.setResponse(err.error)
-        }
-      })
+  ngOnInit(): void {
+    if (this.auth.currentUser()?.user?.accessToken) {
+      console.log('already login')
+      this.router.navigate(['/'])
     }
   }
+  onSubmit(){
+    if (this.userInfo.invalid) {
+     return this.auth.setLoading(false)
+    }
+    this.auth.setLoading(true)
+    const loginData = this.userInfo.value as {email:string,password:string}
+    this.auth.login(loginData).subscribe({
+      next:(value:any)=> {
+        this.auth.setResponse(value.user)
+        this.auth.setLoading(false)
+        this.auth.setMessage(value.message)
+        localStorage.setItem('user',JSON.stringify(value.user))
+        setTimeout(()=> {
+          this.auth.setMessage(null)
+          this.router.navigate(['/'])
+        },1000)
+        
+      },
+      error:(err:any)=>{
+        console.log(err)
+        this.auth.setLoading(false)
+        this.auth.setError(err.error.message)
+        setTimeout(()=> this.auth.setError(null),3000)
+        
+       // this.auth.setResponse(err.error)
+      }
+    })
+  }
   getUserInfo(){
-    return this.auth.response()
+    return this.auth.currentUser()
+  }
+  getErrorMessage(){
+    return this.auth.error()
+  }
+  getLoadingInfo(){
+    return this.auth.loading()
+  }
+  getSuccessMessage(){
+    return this.auth.message()
   }
 }

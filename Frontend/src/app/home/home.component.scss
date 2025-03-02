@@ -2,22 +2,26 @@
     height: 100%;
     width: 100%;
     .home-content{
-        width:100%;
+        width:90%;
         height: 100%;
         display: flex;
-        gap: 10px;
-        padding-top: 5px;
+        gap: 20px;
+        margin: auto;
+       
     
         .filter{
-            width: 25%;
+            width: 20%;
             height: 100%;
-            
         }
         .products{
-            
             width: 75%;
-            height: 100%;
-            box-shadow: -10px 0px 10px 2px #dfdfdf;
+            max-height: calc(100vh - 25vh);
+            overflow: auto;
+           // background-color: #dfdfdf;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
         }
     }
 }

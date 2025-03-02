@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
+    
     .profile-body{
         width: 100%;
         padding-top: 50px;
@@ -13,6 +13,7 @@
         align-items: center;
         justify-content: center;
         gap: 20px;
+       
         
         form{
             display: flex;
@@ -88,7 +89,7 @@
                     }
                 }
             }
-            .button-edit{
+            .button-edit,.button-delete{
                 width: 100%;
                 background: rgb(136, 136, 247);
                 font-size: 18px;
@@ -98,10 +99,68 @@
                 color: white;
                 border: 1px solid rgb(192, 190, 190);
                 border-radius: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
                 &:hover{
                     background-color: rgb(100, 100, 253);
                 }
             }
+            .button-delete{
+                background: rgb(252, 122, 122);
+                
+                &:hover{
+                    background-color: red;
+                    animation: icon 2s linear infinite step-start;
+                    mat-icon{
+                        transform: scale(1.2);
+                    }
+                }
+            }
         }
+        .success-message{
+            position: absolute;
+            right: 50px;
+            bottom: 15%;
+            box-shadow: -10px 10px 10px 2px #dfdfdf;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: green;
+            p{
+                font-size: 18px;
+                text-transform: capitalize;
+            }
+        }
+        .error-message{
+            position: absolute;
+            right: 50px;
+            bottom: 15%;
+            box-shadow: -10px 10px 10px 2px #dfdfdf;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: red;
+            p{
+                font-size: 18px;
+                text-transform: capitalize;
+            }
+        }
+    }
+}
+@keyframes icon {
+    0%{
+        transform: scale(1);
+    }
+    25%{
+        transform: scale(1.025);
+    }
+    50%{
+        transform: scale(1.05);
+    }
+    75%{
+        transform: scale(1.075);
+    }
+    100%{
+        transform: scale(1.2);
     }
 }

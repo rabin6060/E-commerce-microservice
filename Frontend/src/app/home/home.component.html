@@ -14,7 +14,9 @@
             
         </div>
         <div class="products">
-            ola
+            @for (product of products(); track product._id) {
+                <app-product-item [Product]="product"></app-product-item>
+            }
         </div>
     </div>
 </div>

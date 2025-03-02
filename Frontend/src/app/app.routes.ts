@@ -1,4 +1,8 @@
 import { Routes } from '@angular/router';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { SignupComponent } from './signup/signup.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 export const routes: Routes = [
     {
@@ -14,4 +18,20 @@ export const routes: Routes = [
             return import('./login/login.component').then(m=>m.LoginComponent)
         },
     },
+    {
+        path:'signup',
+        component: SignupComponent
+    },
+    {
+        path:'profile',
+        component: ProfileComponent
+    },
+    {
+        path:'product/detail/:id',
+        component: ProductDetailComponent
+    },
+    {
+        path:'**',
+        component: PageNotFoundComponent
+    }
 ];

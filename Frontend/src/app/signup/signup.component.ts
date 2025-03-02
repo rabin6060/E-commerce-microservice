@@ -1,6 +1,7 @@
 import { Component, input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthserviceService } from '../services/authservice.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -17,7 +18,7 @@ export class SignupComponent {
     password: new FormControl(''),
     profilePic: new FormControl(null as File | null),
   })
-  constructor(private auth:AuthserviceService){}
+  constructor(private auth:AuthserviceService,private router:Router){}
   handleImage(event : Event){
     const input = event.target as HTMLInputElement
     if (input.files) {
@@ -32,6 +33,7 @@ export class SignupComponent {
   }
   Register(){
     if (this.userData.valid) {
+      this.auth.setLoading(true)
       const formValue = this.userData.value
       const formData = new FormData()
       formData.append('username',formValue.username || '')
@@ -43,13 +45,30 @@ export class SignupComponent {
         formData.append('profilePic',formValue.profilePic)
       }
       this.auth.signup(formData).subscribe({
-        next:(value)=> {
-          console.log(value)
+        next:(value:any)=> {
+          this.auth.setLoading(false)
+          this.auth.setMessage(value.message || "User Register Successfully")
+          setTimeout(()=> {
+            this.auth.setMessage(null)
+            this.router.navigate(['login'])
+          },2000)
+         
         },
         error:(err)=> {
-          console.log(err)
+          this.auth.setLoading(false)
+          this.auth.setError(err.error.message)
+          setTimeout(()=> this.auth.setError(null),2000)
         },
       })
     }
+  }
+  getLoadingInfo(){
+    return this.auth.loading()
+  }
+  getSuccessMessage(){
+    return this.auth.message()
+  }
+  getErrorMessage(){
+    return this.auth.error()
   }
 }

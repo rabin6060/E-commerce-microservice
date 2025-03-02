@@ -2,6 +2,7 @@ import { Component, effect, signal } from '@angular/core';
 import { AuthserviceService } from '../services/authservice.service';
 import { MatIconModule } from '@angular/material/icon';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -12,6 +13,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class ProfileComponent {
   userInfo = signal<any | null>(this.getInitialUserInfo());
   focus = signal<string | null>(null);
+  trackDelete = signal<boolean>(false)
   editUserInfo = new FormGroup({
     username: new FormControl(''),
     firstName: new FormControl(''),
@@ -19,7 +21,7 @@ export class ProfileComponent {
     profilePic: new FormControl(null as File | null)
   });
 
-  constructor(private auth: AuthserviceService) {
+  constructor(private auth: AuthserviceService,private router:Router) {
     this.updateFormValues();
 
     effect(() => {
@@ -34,10 +36,9 @@ export class ProfileComponent {
         username: user.username || '',
         firstName: user.firstName || '',
         lastName: user.lastName || ''
-        
+      
       });
-      console.log('Effect ran, userInfo:', this.userInfo());
-      console.log('Current form value:', this.editUserInfo.value);
+      
     });
   }
 
@@ -90,26 +91,57 @@ export class ProfileComponent {
       formData.append('username', formValue.username || '');
       formData.append('firstName', formValue.firstName || '');
       formData.append('lastName', formValue.lastName || '');
-      
+      this.auth.setLoading(true)
       if (formValue.profilePic instanceof File) {
         formData.append('profilePic', formValue.profilePic, formValue.profilePic.name);
       }
       this.auth.edit(formData).subscribe({
         next: (value: any) => {
-          this.auth.setResponse(value);
+          this.auth.setResponse(value.user)
+          this.auth.setLoading(false)
+          this.auth.setMessage(value.message);
           this.userInfo.set(value.user);
           localStorage.setItem('user', JSON.stringify(value.user));
-          console.log('Success response:', value);
+          setTimeout(()=>this.auth.setMessage(null) ,3000)
         },
         error: (err: any) => {
-          this.auth.setResponse(err.error);
+          this.auth.setLoading(false)
+          this.auth.setError(err.error || 'user update failed!!');
+          setTimeout(()=>this.auth.setError(null),2000)
           console.error('Edit error:', err);
           console.log('Server response:', err.error);
         }
       });
     }
   }
-
+  deleteProfile(){
+    this.trackDelete.set(true)
+    this.auth.delete().subscribe({
+      next:(value:any)=>{
+        this.trackDelete.set(false)
+        this.auth.setMessage(value.message)
+        setTimeout(()=>{
+          this.auth.setMessage(null)
+          this.router.navigate(['signup'])
+        },2000)
+      },
+      error:(err:any)=>{
+        console.log(err)
+        this.trackDelete.set(false)
+        this.auth.setError(err.error)
+        setTimeout(()=>this.auth.setError(null),2000)
+      }
+    })
+  }
+  getLoadingInfo(){
+    return this.auth.loading()
+  }
+  getSuccessMessage(){
+    return this.auth.message()
+  }
+  getErrorMessage(){
+    return this.auth.error()
+  }
   onEditClick(targetedInput: string) {
     this.focus.set(targetedInput);
   }

@@ -1,15 +1,16 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { Product } from '../models/product.model';
+import { ProductItemComponent } from "../components/product-item/product-item.component";
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [ProductItemComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  response = signal<Array<Product> | null>([])
+  products = signal<Array<Product> | null>([])
   constructor(private product:ProductService){}
   ngOnInit(): void {
     this.fetchProducts()
@@ -17,10 +18,11 @@ export class HomeComponent implements OnInit {
   fetchProducts(){
     this.product.fetchProducts().subscribe({
       next:(value:any)=>{
-        this.response.set(value)
+        console.log(value)
+        this.products.set(value)
       },
       error:(err:any)=> {
-        this.response.set(err.error)
+        this.products.set(err.error)
       }
     }
     )

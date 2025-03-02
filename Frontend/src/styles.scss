@@ -6,10 +6,18 @@ body,html{
 *{
     outline: none;
 }
+app-root{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    
+}
 
 .main_layout{
-    min-height: 80vh;
-    max-width: 70%;
+    flex: 1;
+    width: 85%;
     margin: auto;
+    overflow-y: auto;
 }
+
 

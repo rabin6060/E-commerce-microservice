@@ -10,8 +10,18 @@
                 <label for="password">Password:</label>
                 <input id="password" type="password" placeholder="eg. text123" formControlName="password">
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" [disabled]="false" >Login</button>
         </form>
-        <p>{{getUserInfo().message}}</p>
+        @if(getSuccessMessage()){
+            <div class="success-message">
+                <p>{{getSuccessMessage()}}</p>
+            </div>
+        }
+        @if(getErrorMessage()){
+            <div class="error-message">
+                <p>{{getErrorMessage()}}</p>
+            </div>
+        }
+        
     </div>
 </div>

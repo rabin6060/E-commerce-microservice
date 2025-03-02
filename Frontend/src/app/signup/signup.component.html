@@ -4,31 +4,48 @@
         <form [formGroup]="userData" (ngSubmit)="Register()">
             <div class="username">
                 <label for="username">Username:</label>
-                <input id="username" type="text" placeholder="eg. johndoe123" formControlName="username">
+                <input id="username" required type="text" placeholder="eg. johndoe123" formControlName="username">
             </div>
             <div class="firstName">
                 <label for="firstName">FirstName:</label>
-                <input id="firstName" type="text" placeholder="eg. john" formControlName="firstName">
+                <input id="firstName" required type="text" placeholder="eg. john" formControlName="firstName">
             </div>
             <div class="lastName">
                 <label for="lastName">LastName:</label>
-                <input id="lastName" type="text" placeholder="eg. doe" formControlName="lastName">
+                <input id="lastName" required type="text" placeholder="eg. doe" formControlName="lastName">
             </div>
             
             <div class="email">
                 <label for="email">Email:</label>
-                <input id="email" type="text" placeholder="eg. text@gmail.com" formControlName="email">
+                <input id="email" required type="text" placeholder="eg. text@gmail.com" formControlName="email">
             </div>
             <div class="password">
                 <label for="password">Password:</label>
-                <input id="password" type="password" placeholder="eg. text123" formControlName="password">
+                <input id="password"required="" type="password" placeholder="eg. text123" formControlName="password">
             </div>
             <div class="profilePic">
                 <label for="profile">ProfilePic:</label>
-                <input id="profile" type="file" placeholder="choose a file" (change)="handleImage($event)">
+                <input id="profile" required type="file" placeholder="choose a file" (change)="handleImage($event)">
             </div>
-            <button type="submit" >Register</button>
+            <button type="submit" >
+                @if (getLoadingInfo()) {
+                    Registering...
+                }@else {
+                    Register
+                }
+                
+            </button>
         </form>
+        @if(getSuccessMessage()){
+            <div class="success-message">
+                <p>{{getSuccessMessage()}}</p>
+            </div>
+        }
+        @if(getErrorMessage()){
+            <div class="error-message">
+                <p>{{getErrorMessage()}}</p>
+            </div>
+        }
         <!-- <p>{{getUserInfo().message}}</p> -->
     </div>
 </div>

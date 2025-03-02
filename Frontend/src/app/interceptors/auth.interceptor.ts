@@ -4,18 +4,14 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {
-  constructor() {
-    console.log('LoggingInterceptor instantiated');
-  }
   intercept(req: HttpRequest<any>, handler: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('token')
-    console.log(token)
-    console.log('interceptor running')
-    if (token) {
+    const user = localStorage.getItem('user')
+    const parseValue =user ? JSON.parse(user) : {}
+    if (parseValue?.accessToken) {
         const newReqPath = req.clone({
             setHeaders:{
-                'authorization':`Bearer ${token}`,
-               'Content-Type':'application/json'
+                'authorization':`Bearer ${parseValue?.accessToken}`,
+                
             }
         })
         return handler.handle(newReqPath)

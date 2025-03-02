@@ -25,7 +25,34 @@
                 <input type="text" name="lastName" id="lastName" formControlName="lastName">
                 <span (click)="onEditClick('lastName')"><mat-icon>edit</mat-icon></span>
             </div>
-            <button class="button-edit">Edit Profile</button>
+            <button class="button-edit">
+                @if (getLoadingInfo()) {
+                    <span>Editing...</span>
+                }@else {
+                    <span>Edit Profile</span>
+                }
+                
+            </button>
+            <button type="button" (click)="deleteProfile()" class="button-delete">
+                @if (trackDelete()) {
+                    <span>Deleting...</span>
+                }@else{
+                    <span>Delete Profile</span> <mat-icon>delete</mat-icon>
+                }
+                
+            </button>
         </form>
+        @if(getSuccessMessage()){
+            <div class="success-message">
+                <p>{{getSuccessMessage()}}</p>
+            </div>
+        }
+        @if(getErrorMessage()){
+            <div class="error-message">
+                <p>{{getErrorMessage()}}</p>
+            </div>
+        }
+       
+        
     </div>
 </div>
