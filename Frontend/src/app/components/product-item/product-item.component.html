@@ -1,0 +1,20 @@
+<div class="product-item" [routerLink]="['/product','detail',Product._id]">
+    <div class="product-item-body">
+        <div class="product-image">
+            <img [src]="Product.imageUrls[0].imageUrl" alt="productItem">
+        </div>
+        <div class="content">
+            <div class="content-text">
+                <h3>{{Product.title}}</h3>
+                <p>Rs. <span>
+                    {{Product.price}}
+                </span>
+                </p>
+            </div>
+            <span>
+                <mat-icon>favorite</mat-icon>
+            </span>
+        </div>
+      
+    </div>
+</div>

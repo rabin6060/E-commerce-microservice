@@ -85,7 +85,75 @@ header{
         .last{
                 display: flex;
                 gap: 10px;
+                .userinfo{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    
 
+                    span{
+                        cursor: pointer;
+                        font-size: 24px;
+                        text-transform: capitalize;
+                        color: rgb(100, 100, 102);
+                    }
+                    .profile{
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        border: 1px solid red;
+                        cursor: pointer;
+                        position: relative;
+                        overflow: hidden;
+                        img{
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                    .drop-down{
+                        width: 200px;
+                        background: rgb(191, 191, 194);
+                        position: absolute;
+                        top: 80px;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        display: none;
+                        &.show{
+                            display: block;
+                        }
+                        .drop-down-items{
+                            margin: 0;
+                            padding: 0;
+                            text-decoration: none;
+                            list-style: none;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: start;
+                            
+                            
+                            .list-items{
+                                color: white;
+                                font-size: 18px;
+                                font-weight: 500;
+                                width: 100%;
+                                padding: 10px;
+                                cursor: pointer;
+                               
+                                &:hover{
+                                    background: rgb(235, 234, 234);
+                                    color: black;
+                                }
+                                &:first-child{
+                                    border-width: 1px;
+                                }
+                            }
+                        }
+                    }
+
+                    
+                }
                 .button-nav{
                     background: rgb(136, 136, 247);
                     font-size: 18px;
@@ -99,6 +167,7 @@ header{
                         background-color: rgb(100, 100, 253);
                     }
                 }
+               
             
         }
     }

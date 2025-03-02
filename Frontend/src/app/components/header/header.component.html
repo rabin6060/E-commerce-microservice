@@ -17,13 +17,25 @@
                 
         </div>
         <div class="last">
-            @if(token()?.length){
-                <span>{{user().username}}</span>
-                <button class="button-nav" (click)="logout()">Logout</button>
+            @if(user()?.accessToken){
+                <div class="userinfo">
+                    <span>{{user().username}}</span>
+                    <div class="profile" (click)="setShow()">
+                        <img src={{user().profilePic}} alt="">
+                    </div>
+                    <div class="drop-down" [class.show]="show()">
+                        <ul class="drop-down-items">
+                            <li class="list-items" routerLink="profile" (click)="setShow()">Profile</li>
+                            <li routerLink="login" class="list-items"(click)="logout()">Logout</li>
+                        </ul>
+                    </div>
+                    
+                </div>
+               
             }@else{
                 
                 <button routerLink="login" class="button-nav">Login</button>
-                <button routerLink="login" class="button-nav">Signup</button> 
+                <button routerLink="signup" class="button-nav">Signup</button> 
             }
               
         </div>

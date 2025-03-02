@@ -9,31 +9,33 @@ import { AuthserviceService } from '../../services/authservice.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  token = signal<string | null>(''); // Initialize from localStorage
   user = signal<any | null>({})
+  show = signal<boolean>(false)
   
   constructor(private auth:AuthserviceService){
     effect(()=>{
       const response = this.auth.response()
+      console.log(response)
       if (response?.user) {
-        this.token.set(response.user.accessToken)
         this.user.set(response.user)
           }
-        this.token.set(localStorage.getItem('token'))
         const userData = localStorage.getItem('user')
-        this.user.set(userData ? JSON.parse(userData) : null)
+        this.user.set(userData ? JSON.parse(userData) : {})
+        console.log(this.user)
     })
   }
 
   
-  isLoggedIn(){
-   return !!this.token
-  }
+  
   logout(){
     this.auth.setResponse({})
-    localStorage.removeItem('token')
+    
     localStorage.removeItem('user')
-    this.token.set(null)
+    
     this.user.set(null)
+    this.setShow()
+  }
+  setShow(){
+    this.show.update(prev=>!prev)
   }
 }
