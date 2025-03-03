@@ -4631,3 +4631,124 @@
 {"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-02-23T13:31:41.247Z"}
 {"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-02-23T13:31:41.248Z"}
 {"level":"info","message":"message published successfully","service":"cart-service","timestamp":"2025-02-23T13:31:41.291Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-02-24T06:35:33.136Z"}
+{"level":"info","message":"Redis connected","service":"product-service","timestamp":"2025-02-24T06:35:33.140Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-02-24T06:35:33.139Z"}
+{"level":"info","message":"connected to db","service":"cart-service","timestamp":"2025-02-24T06:35:33.156Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"cart-service","timestamp":"2025-02-24T06:35:33.221Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"product-service","timestamp":"2025-02-24T06:35:33.285Z"}
+{"level":"info","message":"cart-service server running at port 3003","service":"cart-service","timestamp":"2025-02-24T06:35:33.328Z"}
+{"level":"info","message":"req path: /api/cart and method: GET","service":"cart-service","timestamp":"2025-02-24T06:35:47.300Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-02-24T06:35:47.301Z"}
+{"level":"info","message":"fetch all carts started...","service":"cart-service","timestamp":"2025-02-24T06:35:47.302Z"}
+{"level":"info","message":"req path: /api/cart and method: GET","service":"cart-service","timestamp":"2025-02-24T06:55:43.168Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-02-24T06:55:43.169Z"}
+{"level":"info","message":"fetch all carts started...","service":"cart-service","timestamp":"2025-02-24T06:55:43.170Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-02-24T11:03:26.882Z"}
+{"level":"info","message":"Redis connected","service":"product-service","timestamp":"2025-02-24T11:03:26.886Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-02-24T11:03:26.884Z"}
+{"level":"info","message":"connected to db","service":"cart-service","timestamp":"2025-02-24T11:03:26.897Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"cart-service","timestamp":"2025-02-24T11:03:26.972Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"product-service","timestamp":"2025-02-24T11:03:27.025Z"}
+{"level":"info","message":"cart-service server running at port 3003","service":"cart-service","timestamp":"2025-02-24T11:03:27.041Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T14:51:45.262Z"}
+{"level":"info","message":"Redis connected","service":"product-service","timestamp":"2025-03-03T14:51:45.266Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T14:51:45.265Z"}
+{"level":"info","message":"connected to db","service":"cart-service","timestamp":"2025-03-03T14:51:45.314Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"cart-service","timestamp":"2025-03-03T14:51:45.452Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"product-service","timestamp":"2025-03-03T14:51:45.516Z"}
+{"level":"info","message":"cart-service server running at port 3003","service":"cart-service","timestamp":"2025-03-03T14:51:45.549Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T14:51:50.834Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T14:51:50.835Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T14:51:50.836Z"}
+{"0":"\"","1":"t","10":"n","11":"t","12":"\"","13":" ","14":"m","15":"u","16":"s","17":"t","18":" ","19":"b","2":"o","20":"e","21":" ","22":"a","23":" ","24":"n","25":"u","26":"m","27":"b","28":"e","29":"r","3":"t","4":"a","5":"l","6":"A","7":"m","8":"o","9":"u","level":"warn","message":"validation failed","service":"cart-service","timestamp":"2025-03-03T14:51:50.869Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T14:52:32.639Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T14:52:32.640Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T14:52:32.641Z"}
+{"level":"info","message":"message published successfully","service":"cart-service","timestamp":"2025-03-03T14:52:32.703Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T14:52:53.996Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T14:52:53.997Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T14:52:53.997Z"}
+{"0":"p","1":"r","10":"m","11":"u","12":"s","13":"t","14":" ","15":"b","16":"e","17":" ","18":"u","19":"n","2":"o","20":"i","21":"q","22":"u","23":"e","24":" ","25":"i","26":"n","27":" ","28":"t","29":"h","3":"d","30":"e","31":" ","32":"c","33":"a","34":"r","35":"t","4":"u","5":"c","6":"t","7":"I","8":"d","9":" ","level":"warn","message":"validation failed","service":"cart-service","timestamp":"2025-03-03T14:52:54.008Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T14:55:43.854Z"}
+{"level":"info","message":"Redis connected","service":"product-service","timestamp":"2025-03-03T14:55:43.858Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T14:55:43.857Z"}
+{"level":"info","message":"connected to db","service":"cart-service","timestamp":"2025-03-03T14:55:43.875Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"cart-service","timestamp":"2025-03-03T14:55:43.931Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"product-service","timestamp":"2025-03-03T14:55:43.982Z"}
+{"level":"info","message":"cart-service server running at port 3003","service":"cart-service","timestamp":"2025-03-03T14:55:43.996Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T14:55:46.318Z"}
+{"level":"info","message":"Redis connected","service":"product-service","timestamp":"2025-03-03T14:55:46.325Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T14:55:46.322Z"}
+{"level":"info","message":"connected to db","service":"cart-service","timestamp":"2025-03-03T14:55:46.345Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"cart-service","timestamp":"2025-03-03T14:55:46.412Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"product-service","timestamp":"2025-03-03T14:55:46.465Z"}
+{"level":"info","message":"cart-service server running at port 3003","service":"cart-service","timestamp":"2025-03-03T14:55:46.496Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T14:55:49.553Z"}
+{"level":"info","message":"Redis connected","service":"product-service","timestamp":"2025-03-03T14:55:49.559Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T14:55:49.557Z"}
+{"level":"info","message":"connected to db","service":"cart-service","timestamp":"2025-03-03T14:55:49.575Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"cart-service","timestamp":"2025-03-03T14:55:49.642Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"product-service","timestamp":"2025-03-03T14:55:49.698Z"}
+{"level":"info","message":"cart-service server running at port 3003","service":"cart-service","timestamp":"2025-03-03T14:55:49.721Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T14:56:12.050Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T14:56:12.050Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T14:56:12.051Z"}
+{"code":11000,"errorLabelSet":{},"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: cart.carts index: userId_1 dup key: { userId: \"67c41fbff8d70b7894c83e61\" }","index":0,"keyPattern":{"userId":1},"keyValue":{"userId":"67c41fbff8d70b7894c83e61"}},"index":0,"keyPattern":{"userId":1},"keyValue":{"userId":"67c41fbff8d70b7894c83e61"},"level":"error","message":"adding to cart failed E11000 duplicate key error collection: cart.carts index: userId_1 dup key: { userId: \"67c41fbff8d70b7894c83e61\" }","service":"cart-service","stack":"MongoServerError: E11000 duplicate key error collection: cart.carts index: userId_1 dup key: { userId: \"67c41fbff8d70b7894c83e61\" }\n    at InsertOneOperation.execute (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/operations/insert.js:51:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async tryOperation (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/operations/execute_operation.js:207:20)\n    at async executeOperation (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/operations/execute_operation.js:75:16)\n    at async Collection.insertOne (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/collection.js:157:16)","timestamp":"2025-03-03T14:56:12.096Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T14:56:23.499Z"}
+{"level":"info","message":"Redis connected","service":"product-service","timestamp":"2025-03-03T14:56:23.504Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T14:56:23.502Z"}
+{"level":"info","message":"connected to db","service":"cart-service","timestamp":"2025-03-03T14:56:23.519Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"cart-service","timestamp":"2025-03-03T14:56:23.574Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"product-service","timestamp":"2025-03-03T14:56:23.633Z"}
+{"level":"info","message":"cart-service server running at port 3003","service":"cart-service","timestamp":"2025-03-03T14:56:23.661Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T14:56:26.997Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T14:56:26.997Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T14:56:26.998Z"}
+{"0":"p","1":"r","10":"m","11":"u","12":"s","13":"t","14":" ","15":"b","16":"e","17":" ","18":"u","19":"n","2":"o","20":"i","21":"q","22":"u","23":"e","24":" ","25":"i","26":"n","27":" ","28":"t","29":"h","3":"d","30":"e","31":" ","32":"c","33":"a","34":"r","35":"t","4":"u","5":"c","6":"t","7":"I","8":"d","9":" ","level":"warn","message":"validation failed","service":"cart-service","timestamp":"2025-03-03T14:56:27.040Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T15:00:02.684Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T15:00:02.685Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T15:00:02.686Z"}
+{"code":11000,"errorLabelSet":{},"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: cart.carts index: cartItems.productId_1 dup key: { cartItems.productId: \"67bb13ca964521ee5bc87c81\" }","index":0,"keyPattern":{"cartItems.productId":1},"keyValue":{"cartItems.productId":"67bb13ca964521ee5bc87c81"}},"index":0,"keyPattern":{"cartItems.productId":1},"keyValue":{"cartItems.productId":"67bb13ca964521ee5bc87c81"},"level":"error","message":"adding to cart failed E11000 duplicate key error collection: cart.carts index: cartItems.productId_1 dup key: { cartItems.productId: \"67bb13ca964521ee5bc87c81\" }","service":"cart-service","stack":"MongoServerError: E11000 duplicate key error collection: cart.carts index: cartItems.productId_1 dup key: { cartItems.productId: \"67bb13ca964521ee5bc87c81\" }\n    at UpdateOneOperation.execute (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/operations/update.js:75:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async tryOperation (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/operations/execute_operation.js:207:20)\n    at async executeOperation (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/operations/execute_operation.js:75:16)\n    at async Collection.updateOne (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/collection.js:207:16)","timestamp":"2025-03-03T15:00:02.725Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T15:00:52.539Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T15:00:52.540Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T15:00:52.540Z"}
+{"code":11000,"errorLabelSet":{},"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: cart.carts index: cartItems.productId_1 dup key: { cartItems.productId: \"67bb13ca964521ee5bc87c81\" }","index":0,"keyPattern":{"cartItems.productId":1},"keyValue":{"cartItems.productId":"67bb13ca964521ee5bc87c81"}},"index":0,"keyPattern":{"cartItems.productId":1},"keyValue":{"cartItems.productId":"67bb13ca964521ee5bc87c81"},"level":"error","message":"adding to cart failed E11000 duplicate key error collection: cart.carts index: cartItems.productId_1 dup key: { cartItems.productId: \"67bb13ca964521ee5bc87c81\" }","service":"cart-service","stack":"MongoServerError: E11000 duplicate key error collection: cart.carts index: cartItems.productId_1 dup key: { cartItems.productId: \"67bb13ca964521ee5bc87c81\" }\n    at UpdateOneOperation.execute (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/operations/update.js:75:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async tryOperation (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/operations/execute_operation.js:207:20)\n    at async executeOperation (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/operations/execute_operation.js:75:16)\n    at async Collection.updateOne (/home/rabin/Desktop/E-commerce/cart-service/node_modules/mongodb/lib/collection.js:207:16)","timestamp":"2025-03-03T15:00:52.548Z"}
+{"level":"info","message":"req path: /api/cart and method: GET","service":"cart-service","timestamp":"2025-03-03T15:02:11.597Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T15:02:11.597Z"}
+{"level":"info","message":"fetch all carts started...","service":"cart-service","timestamp":"2025-03-03T15:02:11.598Z"}
+{"level":"info","message":"req path: /api/cart/67bb233d4d8c9a379f95be7c and method: POST","service":"cart-service","timestamp":"2025-03-03T15:02:48.152Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T15:02:48.152Z"}
+{"level":"info","message":"remove cart items started..","service":"cart-service","timestamp":"2025-03-03T15:02:48.153Z"}
+{"level":"info","message":"message published successfully","service":"cart-service","timestamp":"2025-03-03T15:02:48.168Z"}
+{"level":"info","message":"req path: /api/cart/67bb233d4d8c9a379f95be7c and method: POST","service":"cart-service","timestamp":"2025-03-03T15:03:24.417Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T15:03:24.417Z"}
+{"level":"info","message":"remove cart items started..","service":"cart-service","timestamp":"2025-03-03T15:03:24.417Z"}
+{"level":"info","message":"message published successfully","service":"cart-service","timestamp":"2025-03-03T15:03:24.429Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T15:11:54.836Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T15:11:54.836Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T15:11:54.837Z"}
+{"level":"info","message":"message published successfully","service":"cart-service","timestamp":"2025-03-03T15:11:54.853Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T15:13:27.082Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T15:13:27.082Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T15:13:27.083Z"}
+{"level":"info","message":"message published successfully","service":"cart-service","timestamp":"2025-03-03T15:13:27.098Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T15:14:38.411Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T15:14:38.411Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T15:14:38.412Z"}
+{"level":"info","message":"message published successfully","service":"cart-service","timestamp":"2025-03-03T15:14:38.426Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T15:15:13.724Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T15:15:13.724Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T15:15:13.725Z"}
+{"level":"info","message":"message published successfully","service":"cart-service","timestamp":"2025-03-03T15:15:13.741Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T15:16:39.509Z"}
+{"level":"info","message":"Redis connected","service":"product-service","timestamp":"2025-03-03T15:16:39.514Z"}
+{"level":"info","message":"Redis connected","service":"cart-service","timestamp":"2025-03-03T15:16:39.512Z"}
+{"level":"info","message":"connected to db","service":"cart-service","timestamp":"2025-03-03T15:16:39.529Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"cart-service","timestamp":"2025-03-03T15:16:39.591Z"}
+{"level":"info","message":"rabbitmq connnection successfully","service":"product-service","timestamp":"2025-03-03T15:16:39.649Z"}
+{"level":"info","message":"cart-service server running at port 3003","service":"cart-service","timestamp":"2025-03-03T15:16:39.670Z"}
+{"level":"info","message":"req path: /api/cart and method: POST","service":"cart-service","timestamp":"2025-03-03T15:16:59.535Z"}
+{"level":"info","message":"req body [object Object]","service":"cart-service","timestamp":"2025-03-03T15:16:59.535Z"}
+{"level":"info","message":"adding to a cart started...","service":"cart-service","timestamp":"2025-03-03T15:16:59.537Z"}
+{"level":"info","message":"message published successfully","service":"cart-service","timestamp":"2025-03-03T15:16:59.587Z"}
