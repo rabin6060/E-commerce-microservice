@@ -5,7 +5,8 @@ import { Injectable, Input, signal } from '@angular/core';
   providedIn: 'root'
 })
 export class ProductService {
-
+  error = signal<string | null>(null)
+  success = signal<string | null>(null)
   private readonly apiUrl = 'http://localhost:3000/v1/product';
   constructor(private http:HttpClient) { }
   
@@ -21,5 +22,11 @@ export class ProductService {
       headers:{
         'Content-Type':'application/json'
       }})
+  }
+  setError(data:string | null){
+    this.error.set(data)
+  }
+  setSuccessMessage(data:string | null){
+    this.success.set(data)
   }
 }
