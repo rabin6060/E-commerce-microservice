@@ -15,7 +15,48 @@
             </div>
         </div>
         <div class="content">
-            hello
+            <div class="button-design">New Product</div>
+            <h3>{{Product().title}}</h3>
+            <span class="price">Rs. {{Product().price}}</span>
+            
+            <hr>
+            <div class="description">
+                <h2>Description</h2>
+                <p>{{Product().desc}}</p>
+            </div>
+            <hr>
+            
+            <div class="stock">
+                <h2>Stock:</h2>
+                <span>{{Product().totalStock}}</span>
+            </div>
+            <div class="quantity">
+                <h2>Quantity:</h2>
+                <div class="quantity-select">
+                    <button class="remove" (click)="removeQuantity()">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <div class="display">
+                        {{quantity()}}
+                    </div>
+                    
+                    <button class="add" (click)="addQuantity()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+               
+            </div>
+            <button type="submit" id="cart-button" (click)="addToCart()">Add To Cart</button>
         </div>
+        @if(getErrorMessage()){
+            <div class="error-message">
+                <p>{{getErrorMessage()}}</p>
+            </div>
+        }
+        @if(getSuccessMessage()){
+            <div class="success-message">
+                <p>{{getSuccessMessage()}}</p>
+            </div>
+        }
     </div>
 </div>
