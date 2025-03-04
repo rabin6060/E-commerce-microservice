@@ -25,7 +25,16 @@ const addCart = async(req,res)=>{
         }
         const {price,quantity,productId} = req.body
         const totalAmount =price * quantity
-        const cartItemData = {price,quantity,productId}
+        const response = await fetch(`http://localhost:3000/v1/product/${productId}`,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json',
+                'authorization':req.headers.authorization
+            }
+        })
+        const product = await response.json()
+        console.log(product)
+        const cartItemData ={price,quantity,productId,title:product?.title,imageUrl:product?.imageUrls[0].imageUrl}
         const newBody = {cartItems:[cartItemData],userId:userId,totalAmount:parseInt(totalAmount)}
         let cartItem = await Cart.findOne({
             userId:userId,
