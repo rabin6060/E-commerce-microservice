@@ -1,0 +1,40 @@
+
+<div class="main">
+    @for (item of CartItem; track item.productId) {
+        <div class="cart-item">
+            <div class="image">
+                <img [src]="item.imageUrl" alt="image-product">
+            </div>
+            <div class="cart-item-content">
+                <div class="text">
+                    <h1>{{item.title}}</h1>
+                    <p>Rs. {{item.price}}</p>
+                </div>
+                <div class="quantity">
+                    <h2>Quantity:</h2>
+                    <div class="quantity-select">
+                        <button class="remove">
+                            <mat-icon>remove</mat-icon>
+                        </button>
+                        <div class="display">
+                           {{item.quantity}}
+                        </div>
+                        
+                        <button class="add" >
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                   
+                </div>
+                <span class="close">
+                    <mat-icon>close</mat-icon>
+                </span>
+            </div>
+         
+        </div>
+        <hr>
+        
+
+}
+</div>
+
