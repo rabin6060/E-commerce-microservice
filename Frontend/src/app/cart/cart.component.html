@@ -1,0 +1,12 @@
+<div class="cart">
+    <div class="cart-body">
+        <div class="cart-items">
+            @for (item of getCartInfo(); track item._id) {
+                <app-cart-item [CartItem] = "item.cartItems"></app-cart-item>
+            }
+        </div>
+        <div class="checkout">
+            
+        </div>
+    </div>
+</div>

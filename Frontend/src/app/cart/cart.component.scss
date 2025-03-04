@@ -1,0 +1,27 @@
+.cart{
+    width: 100%;
+    height: 100vh;
+    
+    .cart-body{
+        max-width: 80%;
+        margin: auto;
+        height: 100%;
+        display: flex;
+        gap: 20px;
+        padding: 50px 0px;
+
+        .cart-items{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 0 0 60%;
+        
+        }
+        .checkout{
+            flex: 1;
+            
+        }
+    }
+    
+}
