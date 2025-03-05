@@ -7,6 +7,7 @@ import { Injectable, Input, signal } from '@angular/core';
 export class ProductService {
   error = signal<string | null>(null)
   success = signal<string | null>(null)
+  loading = signal<boolean>(false)
   private readonly apiUrl = 'http://localhost:3000/v1/product';
   constructor(private http:HttpClient) { }
   
@@ -28,5 +29,8 @@ export class ProductService {
   }
   setSuccessMessage(data:string | null){
     this.success.set(data)
+  }
+  setLoading(data:boolean){
+    this.loading.set(data)
   }
 }
