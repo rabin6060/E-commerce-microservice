@@ -33,7 +33,7 @@ const addCart = async(req,res)=>{
             }
         })
         const product = await response.json()
-        console.log(product)
+        
         const cartItemData ={price,quantity,productId,title:product?.title,imageUrl:product?.imageUrls[0].imageUrl}
         const newBody = {cartItems:[cartItemData],userId:userId,totalAmount:parseInt(totalAmount)}
         let cartItem = await Cart.findOne({
@@ -66,7 +66,7 @@ const addCart = async(req,res)=>{
         }
     
         await publishCartInfo('cart_created',message)
-        
+        await redisClient.del([`carts/${userId}`])
        res.status(201).json({
         success:true,
         message:'Added to cart successfully!!',
@@ -84,12 +84,20 @@ const addCart = async(req,res)=>{
 const getAllCarts = async(req,res)=>{
     logger.info("fetch all carts started...")
     try {
-        const cachedKey = 'carts'
+        const result =await redisClient.get("userId")
+        const {userId} = JSON.parse(result)
+        if (!result) {
+            return res.status(401).json({
+                success: false,
+                message: "User ID not found in cache, please log in again",
+            });
+        }
+        const cachedKey = `carts/${userId}`
         const cachedProducts = await redisClient.get(cachedKey)
         if (cachedProducts) {
             return res.status(201).json(JSON.parse(cachedProducts))
         }
-        const carts = await Cart.find({}).sort({'createdAt':-1}).select('-__v')
+        const carts = await Cart.findOne({userId:userId}).sort({'createdAt':-1}).select('-__v')
         await redisClient.setex(cachedKey,60,JSON.stringify(carts))
         res.status(201).json(carts)
     } catch (error) {
@@ -107,6 +115,15 @@ const removeCartItem = async(req,res)=>{
         const {id} = req.params
         const {action} = req.query
         const {productId,price,quantity} = req.body
+
+        const result =await redisClient.get("userId")
+        const {userId} = JSON.parse(result)
+        if (!result) {
+            return res.status(401).json({
+                success: false,
+                message: "User ID not found in cache, please log in again",
+            });
+        }
 
         const {error} = cartEditValidation(req.body)
         if (error) {
@@ -149,10 +166,11 @@ const removeCartItem = async(req,res)=>{
             productId:productId,
             quantity:quantity
         }
+        await redisClient.del([`carts/${userId}`])
         await publishCartInfo('cart_updated',message)
         return res.status(200).json({
             success:true,
-            cart
+            cart:cart
         })
     } catch (error) {
         logger.error('cart remove failed',error)
