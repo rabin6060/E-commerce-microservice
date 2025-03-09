@@ -13,20 +13,20 @@
                 <div class="quantity">
                     <h2>Quantity:</h2>
                     <div class="quantity-select">
-                        <button class="remove">
+                        <button class="remove" (click)="decCartItem(getCartId(),item)">
                             <mat-icon>remove</mat-icon>
                         </button>
                         <div class="display">
                            {{item.quantity}}
                         </div>
                         
-                        <button class="add" >
+                        <button class="add" (click)="incCartItem(getCartId(),item)">
                             <mat-icon>add</mat-icon>
                         </button>
                     </div>
                    
                 </div>
-                <span class="close">
+                <span class="close" (click)="removeCartItem(getCartId(),item)">
                     <mat-icon>close</mat-icon>
                 </span>
             </div>

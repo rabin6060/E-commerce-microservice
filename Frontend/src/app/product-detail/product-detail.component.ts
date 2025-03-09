@@ -1,28 +1,33 @@
 import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import { ProductService } from '../services/product.service';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute, ParamMap, Route, Router, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CartService } from '../services/cart.service';
 
+
 @Component({
   selector: 'app-product-detail',
-  imports: [MatIconModule,ReactiveFormsModule],
+  imports: [MatIconModule,ReactiveFormsModule,RouterLink],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss'
 })
 export class ProductDetailComponent implements OnInit {
 quantity = signal<number>(0)
-productId : string | null = null
-Product = signal<any | null>(null)
+productId! : string
+Product = signal<any | null>({})
 constructor(private product:ProductService,private route:ActivatedRoute,
-  private cart:CartService,
+  private cart:CartService,private rout:Router
 ){}
   ngOnInit(): void {
-    this.productId = this.route.snapshot.paramMap.get('id')
-    if (this.productId) {
-      this.fetchProductById(this.productId)
-    }
+    this.route.paramMap.subscribe((param:ParamMap)=>{
+      this.productId = param.get('id') || ''
+      console.log(this.productId)
+      if (this.productId) {
+        this.fetchProductById(this.productId)
+      }
+    })
+    
     
   }
 
@@ -85,15 +90,26 @@ constructor(private product:ProductService,private route:ActivatedRoute,
       price:this.Product().price,
       productId:this.Product()._id
     }
+    
+    this.product.setLoading(true)
     this.cart.add(formData).subscribe({
       next:(value:any)=> {
+        this.cart.setCartInfo(value)
+        this.product.setLoading(false)
         this.product.setSuccessMessage(value.message || 'Added to Cart added successfully')
         setTimeout(()=> {
           this.product.setSuccessMessage(null)
+          this.rout.navigate(['cart'])
         },2000)
       },
       error:(err)=> {
-        console.log(err.error)
+        console.log(err)
+        this.product.setLoading(false)
+        this.product.setError(err.error.message || 'Added to Cart failed !')
+        setTimeout(()=> {
+          this.product.setError(null)
+          this.rout.navigate(['cart'])
+        },2000)
       },
     })
     
@@ -103,8 +119,11 @@ constructor(private product:ProductService,private route:ActivatedRoute,
     return this.product.error()
   }
   getSuccessMessage(){
-    console.log(this.product.success())
     return this.product.success()
   }
+  isLoading(){
+    return this.product.loading()
+  }
+
 
 }

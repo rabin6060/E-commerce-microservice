@@ -4,7 +4,6 @@ header{
     height: 10vh;
     border-bottom: 1px solid rgb(224, 229, 233);
     box-shadow: 5px 10px 8px #d8d7d7;
-   // background: rgb(224, 229, 233);
     
     nav{
         max-width: 80%;
@@ -89,12 +88,50 @@ header{
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    gap: 10px;
-                    
-
-                    span{
-                        cursor: pointer;
+                    gap: 20px;
+                    .logo{
+                        position: relative;
+                        width: 50px;
+                        height: 50px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 50%;
+                        background: #bfbfc2;
                         font-size: 24px;
+                        cursor: pointer;
+                        color: white;
+                        
+                        &:hover{
+                            mat-icon{
+                                transition: transform .3s linear;
+                                transform: scale(1.2);
+                            }
+                           
+                        }
+
+                        .cart-items{
+                            width: 25px;
+                            height: 25px;
+                            border-radius: 50%;
+                            background: red;
+                            text-align: center;
+                            line-height: 25px;
+                            color: white;
+                            font-size: 18px;
+                            font-weight: 600;
+                            position: absolute;
+                            top: 0;    // Move up outside the logo
+                            right: -12px;
+                            transform: translate(-50%,-50%);
+                        
+                        }
+                        
+                    }
+                    
+                    .username{
+                        cursor: pointer;
+                        font-size: 28px;
                         text-transform: capitalize;
                         color: rgb(100, 100, 102);
                     }
@@ -102,7 +139,6 @@ header{
                         width: 50px;
                         height: 50px;
                         border-radius: 50%;
-                        border: 1px solid red;
                         cursor: pointer;
                         position: relative;
                         overflow: hidden;

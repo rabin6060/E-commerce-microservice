@@ -43,7 +43,7 @@
             </button>
         </form>
         @if(getSuccessMessage()){
-            <div class="success-message">
+            <div class="success-message" [class.active]="getSuccessMessage()">
                 <p>{{getSuccessMessage()}}</p>
             </div>
         }

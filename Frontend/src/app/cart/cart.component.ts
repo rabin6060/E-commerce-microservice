@@ -1,14 +1,13 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { CartItemComponent } from "../components/cart-item/cart-item.component";
-import { RouterLink } from '@angular/router';
 import { CheckoutService } from '../services/checkout.service';
 import { switchMap } from 'rxjs';
 import { StripeService } from 'ngx-stripe';
 
 @Component({
   selector: 'app-cart',
-  imports: [CartItemComponent,RouterLink],
+  imports: [CartItemComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
@@ -21,11 +20,11 @@ export class CartComponent implements OnInit {
   ){}
   ngOnInit(): void {
     this.getAllCartItems()
+    this.getCartInfo()
   }
   private getAllCartItems(){
     this.cart.getAllCartItemsOfUser().subscribe({
       next:(value:any)=>{
-        console.log(value)
         this.cart.setCartInfo(value)
       },
       error:(err)=>{
@@ -45,7 +44,6 @@ export class CartComponent implements OnInit {
       .checkout(formData)
       .pipe(
         switchMap((result: any) => {
-          console.log('Checkout Session:', result);
           return this.stripeService.redirectToCheckout({
             sessionId: result.session_id,
           });

@@ -1,28 +1,31 @@
 <div class="cart">
     <div class="cart-body">
-        <div class="cart-items">
-            
-            <app-cart-item [CartItem] = "getCartInfo().cartItems"></app-cart-item>
-            
-        </div>
-        <div class="checkout">
-            @for (item of getCartInfo().cartItems; track item.productId) {
-                <div class="items">
-                    <p>{{item.title}}</p>
-                    <span>Rs. {{item.price*item.quantity}}</span>
-                </div>
-               
-            }
-            <hr>
-            <div class="total">
-                <h3>Total</h3>
-                <span>Rs. {{getCartInfo().totalAmount}}</span>
+        @if(getCartInfo()?.cartItems?.length>0){
+            <div class="cart-items">
+                <app-cart-item [CartItem] = "getCartInfo().cartItems"></app-cart-item>
             </div>
-            <hr>
-            <button type="submit" id="cart-button" (click)="checkout()">
-                Proceed To Checkout
-            </button>
-            
-        </div>
+            <div class="checkout">
+                @for (item of getCartInfo().cartItems; track item.productId) {
+                    <div class="items">
+                        <p>{{item.title}}</p>
+                        <span>Rs. {{item.price*item.quantity}}</span>
+                    </div>
+                   
+                }
+                <hr>
+                <div class="total">
+                    <h3>Total</h3>
+                    <span>Rs. {{getCartInfo().totalAmount}}</span>
+                </div>
+                <hr>
+                <button type="submit" id="cart-button" (click)="checkout()">
+                    Proceed To Checkout
+                </button>
+                
+            </div>
+        }@else {
+            <h1>No Items</h1>
+        }
+        
     </div>
 </div>

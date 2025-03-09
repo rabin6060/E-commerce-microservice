@@ -19,7 +19,17 @@
         <div class="last">
             @if(user()?.accessToken){
                 <div class="userinfo">
-                    <span>{{user().username}}</span>
+                    <span class="username">{{user().username}}</span>
+                   
+                    <span class="logo" routerLink="cart">
+                        <mat-icon>shopping_cart</mat-icon>
+                        @if (getCartQuantity()) {
+                            <span class="cart-items">{{getCartQuantity()}}</span>
+                        }
+                        
+                    </span>
+                    
+                    
                     <div class="profile" (click)="setShow()">
                         <img src={{user().profilePic}} alt="">
                     </div>

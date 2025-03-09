@@ -1,21 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit, signal } from '@angular/core';
+import { computed, effect, Injectable, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartService implements OnInit {
-  cartId !:string
-  cartItems = signal<any | null>({})
+export class CartService {
+  cartItems = signal<any | null>(null)
+  cartItemQuantity = computed(()=>this.cartItems ? this.cartItems().cartItems.length : 0)
   constructor(private http:HttpClient,private route:ActivatedRoute) {
+    effect(()=>{
+      console.log('count')
+      this.cartItemQuantity()
+    })
    }
-   ngOnInit(): void {
-     this.route.paramMap.subscribe((params:ParamMap)=>{
-      this.cartId = params.get('id') || ''
-      console.log(this.cartId)
-     })
-   }
+   
+   
   add(body:any){
     const baseUrl='http://localhost:3000/v1/cart'
     return this.http.post(baseUrl,body,{

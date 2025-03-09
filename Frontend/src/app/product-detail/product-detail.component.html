@@ -1,19 +1,22 @@
 <div class="product-detail">
     <div class="product-detail-body">
-        <div class="images">
-            <div class="first">
-                <img [src]="Product()?.imageUrls[0].imageUrl" alt="first">
+        @if (Product().imageUrls.length>0) {
+            <div class="images">
+                <div class="first">
+                    <img [src]=" Product()!.imageUrls[0].imageUrl" alt="first">
+                </div>
+                <div class="second">
+                    <img [src]="Product()!.imageUrls[1].imageUrl" alt="second">
+                </div>
+                <div class="third">
+                    <img [src]="Product()!.imageUrls[2].imageUrl" alt="third">
+                </div>
+                <div class="fourth">
+                    <img [src]="Product()!.imageUrls[3].imageUrl" alt="fourth">
+                </div>
             </div>
-            <div class="second">
-                <img [src]="Product()?.imageUrls[1].imageUrl" alt="second">
-            </div>
-            <div class="third">
-                <img [src]="Product()?.imageUrls[2].imageUrl" alt="third">
-            </div>
-            <div class="fourth">
-                <img [src]="Product()?.imageUrls[3].imageUrl" alt="fourth">
-            </div>
-        </div>
+        }
+        
         <div class="content">
             <div class="button-design">New Product</div>
             <h3>{{Product().title}}</h3>
@@ -46,15 +49,24 @@
                 </div>
                
             </div>
-            <button type="submit" id="cart-button" (click)="addToCart()">Add To Cart</button>
+            <button type="submit" id="cart-button" (click)="addToCart()">
+                @if (isLoading()) {
+                    <span>Adding...</span>
+                }@else {
+                    Add To Cart
+                }
+            </button>
+            <button type="button" id="cart-button" routerLink="/cart">
+                    View Carts <mat-icon>shopping_cart</mat-icon>
+            </button>
         </div>
         @if(getErrorMessage()){
-            <div class="error-message">
+            <div class="error-message" [class.active]="getErrorMessage()">
                 <p>{{getErrorMessage()}}</p>
             </div>
         }
-        @if(getSuccessMessage()){
-            <div class="success-message">
+        @if(getSuccessMessage() ){
+            <div class="success-message" [class.active]="getSuccessMessage()">
                 <p>{{getSuccessMessage()}}</p>
             </div>
         }

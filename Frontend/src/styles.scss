@@ -4,6 +4,7 @@ body,html{
     padding: 0;
 }
 *{
+    margin: 0;
     outline: none;
 }
 app-root{
@@ -20,4 +21,51 @@ app-root{
     overflow-y: auto;
 }
 
-
+.error-message ,.success-message{
+    position: absolute;
+    right: 50px;
+    bottom: 15%;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: red;
+    box-shadow: -10px 10px 10px 2px #dfdfdf;
+    transform: translateY(150%); /* Start off-screen */
+    opacity: 0;
+    transition: all 0.3s ease-out;
+    
+    /* Animation when active */
+    &.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  
+    p {
+      font-size: 18px;
+      text-transform: capitalize;
+      margin: 0;
+    }
+  
+    /* Add animation keyframes for more control */
+    @keyframes slideUp {
+      0% {
+        transform: translateY(150%);
+        opacity: 0;
+      }
+      80% {
+        transform: translateY(-10%);
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  
+    /* Apply the animation */
+    &.active {
+      animation: slideUp 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+  }
+  .success-message{
+    color: green;
+  }
+ 

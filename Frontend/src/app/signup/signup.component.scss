@@ -56,31 +56,5 @@
                 }
             }
         }
-        .success-message{
-            position: absolute;
-            right: 50px;
-            bottom: 0;
-            box-shadow: -10px 10px 10px 2px #dfdfdf;
-            padding: 10px 20px;
-            border-radius: 5px;
-            color: green;
-            p{
-                font-size: 18px;
-                text-transform: capitalize;
-            }
-        }
-        .error-message{
-            position: absolute;
-            right: 50px;
-            bottom: 15%;
-            box-shadow: -10px 10px 10px 2px #dfdfdf;
-            padding: 10px 20px;
-            border-radius: 5px;
-            color: red;
-            p{
-                font-size: 18px;
-                text-transform: capitalize;
-            }
-        }
     }
 }
