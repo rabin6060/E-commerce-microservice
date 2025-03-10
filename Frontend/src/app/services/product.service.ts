@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Input, signal } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,18 +10,19 @@ export class ProductService {
   error = signal<string | null>(null)
   success = signal<string | null>(null)
   loading = signal<boolean>(false)
-  private readonly apiUrl = 'http://localhost:3000/v1/product';
   constructor(private http:HttpClient) { }
   
-  fetchProducts(){
-    return this.http.get(this.apiUrl,{
+  fetchProducts(pageNumber:number | null){
+    const baseUrl = 'http://localhost:3000/v1/product'
+    return this.http.get(`${baseUrl}?pageNumber=${pageNumber}`,{
       headers:{
         'Content-Type':'application/json'
       }
     })
   }
   fetchProductById(id:string){
-    return this.http.get(`${this.apiUrl}/${id}`,{
+    const baseUrl = 'http://localhost:3000/v1/product'
+    return this.http.get(`${baseUrl}/${id}`,{
       headers:{
         'Content-Type':'application/json'
       }})
