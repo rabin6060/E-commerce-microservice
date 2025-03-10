@@ -15,9 +15,8 @@
         }
         .products{
             width: 75%;
-            max-height: calc(100vh - 25vh);
+            max-height: calc(100vh - 20vh);
             overflow: auto;
-           // background-color: #dfdfdf;
             padding: 20px;
             display: flex;
             gap: 20px;
