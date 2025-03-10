@@ -13,7 +13,7 @@
             </div>
             
         </div>
-        <div class="products">
+        <div class="products" #scrollContainer (scroll)="onScroll($event)">
             @for (product of products(); track product._id) {
                 <app-product-item [Product]="product"></app-product-item>
             }
