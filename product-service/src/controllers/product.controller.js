@@ -76,14 +76,16 @@ const getAllProducts = async(req,res)=>{
         const limit = 8
         const skip = (+pageNumber - 1)*limit
         const allProducts = await Product.find()
-        const cachedKey = 'products'
-        // const cachedProducts = await redisClient.get(cachedKey)
-        // if (cachedProducts) {
-        //     return res.status(201).json(JSON.parse(cachedProducts))
-        // }
+        
         const products = await Product.find({}).sort({'createdAt':-1}).skip(skip).limit(limit).select('-__v')
         const totalPages = Math.ceil(allProducts.length/limit)
-      //  await redisClient.setex(cachedKey,60,JSON.stringify(products))
+        if (pageNumber > totalPages) {
+            return res.status(404).json({
+                success:false,
+                message:'no more products'
+            })
+        }
+       
         res.status(201).json({products:products,totalPages:totalPages,pageNumber:+pageNumber})
     } catch (error) {
         logger.error('no products found',error)
