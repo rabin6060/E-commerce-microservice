@@ -1,6 +1,6 @@
 const Product = require("../models/product.models")
 const { logger } = require("../utils/logger")
-const { consumeUserInfo } = require("../utils/rabbitmq.connection")
+const { consumeUserInfo, publish } = require("../utils/rabbitmq.connection")
 const { productValidation } = require("../utils/product.validation")
 const Redis = require('ioredis')
 const { upload, deleteImage } = require("../utils/cloudinary")
@@ -29,9 +29,15 @@ const createProduct = async(req,res)=>{
             return null
         })))
        
-        await consumeUserInfo('user_created')
+        
         const result =await redisClient.get("userId")
         const {userId} = JSON.parse(result)
+        if (!result) {
+            return res.status(401).json({
+                success: false,
+                message: "User ID not found in cache, please log in again",
+            });
+        }
         const newBody = {...req.body,userId:userId,imageUrls:images}
         
         const {error} = productValidation(newBody)
@@ -45,7 +51,13 @@ const createProduct = async(req,res)=>{
         
         const newProduct = new Product(newBody)
         await newProduct.save()
-        
+        const message = {
+            productId:newProduct._id,
+            price:newProduct.price,
+            totalQuantity:newProduct.totalStock
+        }
+        await redisClient.del([`productByID${newProduct._id}`,'products','productByUserID'])
+        await publish('product_created',message)
        res.status(201).json(newProduct)
     } catch (error) {
         logger.error('product creation failed',error)
@@ -59,14 +71,20 @@ const createProduct = async(req,res)=>{
 const getAllProducts = async(req,res)=>{
     logger.info("fetch all products started...")
     try {
+        const pageNumber = req.query.pageNumber
+        
+        const limit = 8
+        const skip = (+pageNumber - 1)*limit
+        const allProducts = await Product.find()
         const cachedKey = 'products'
-        const cachedProducts = await redisClient.get(cachedKey)
-        if (cachedProducts) {
-            return res.status(201).json(JSON.parse(cachedProducts))
-        }
-        const products = await Product.find({}).sort({'createdAt':-1}).select('-__v')
-        await redisClient.setex(cachedKey,60,JSON.stringify(products))
-        res.status(201).json(products)
+        // const cachedProducts = await redisClient.get(cachedKey)
+        // if (cachedProducts) {
+        //     return res.status(201).json(JSON.parse(cachedProducts))
+        // }
+        const products = await Product.find({}).sort({'createdAt':-1}).skip(skip).limit(limit).select('-__v')
+        const totalPages = Math.ceil(allProducts.length/limit)
+      //  await redisClient.setex(cachedKey,60,JSON.stringify(products))
+        res.status(201).json({products:products,totalPages:totalPages,pageNumber:+pageNumber})
     } catch (error) {
         logger.error('no products found',error)
         return res.status(500).json({
@@ -80,7 +98,7 @@ const getSingleProductById = async(req,res)=>{
     logger.info("fetch single products started...")
     try {
         const {id} = req.params
-        const cachedKey = 'productByID'
+        const cachedKey = `productByID:${id}`
         const cachedProducts = await redisClient.get(cachedKey)
         if (cachedProducts) {
             return res.status(201).json(JSON.parse(cachedProducts))
@@ -212,7 +230,7 @@ const deleteProduct = async(req,res)=>{
             await deleteImage(image.imageId)
         })))
         
-        await redisClient.del(['productByID','products','productByUserID'])
+        await redisClient.del([`productByID${id}`,'products','productByUserID'])
         res.status(200).json({
             success:true,
             message:"product deleted successfully"
