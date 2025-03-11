@@ -1,6 +1,6 @@
 .product-item{
     width:250px;
-    height: 350px;
+    height: 380px;
     border:1px ;
     border-radius: 10px;
     overflow: hidden;
@@ -9,6 +9,7 @@
     &:hover{
         box-shadow: -10px 0px 10px 2px #dfdfdf;
     }
+ //   margin-bottom: 20px;
     .product-item-body{
         width: 100%;
         height: 100%;

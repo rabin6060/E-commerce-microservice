@@ -1,8 +1,10 @@
-import { Component, signal,effect, OnInit } from '@angular/core';
+import { Component, signal,effect, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthserviceService } from '../../services/authservice.service';
 import { CartService } from '../../services/cart.service';
+import { ProductService } from '../../services/product.service';
+import { debounceTime, fromEvent } from 'rxjs';
 @Component({
   selector: 'app-header',
   imports: [RouterLink,MatIconModule],
@@ -12,7 +14,9 @@ import { CartService } from '../../services/cart.service';
 export class HeaderComponent implements OnInit{
   user = signal<any | null>({})
   show = signal<boolean>(false)
-  constructor(private auth:AuthserviceService,private cart:CartService){
+  pageNumber ?: 1
+  @ViewChild('searchInput') searchInput!:ElementRef
+  constructor(private auth:AuthserviceService,private cart:CartService,private product:ProductService){
     effect(()=>{
       const response = this.auth.response()
       console.log(response)
@@ -25,7 +29,26 @@ export class HeaderComponent implements OnInit{
         this.getCartQuantity()
     })
     
-  
+  }
+  ngAfterViewInit() {
+    fromEvent<Event>(this.searchInput.nativeElement, 'input')
+      .pipe(debounceTime(1000)) // Wait 1s after last keystroke
+      .subscribe((event: Event) => {
+        const title = (event.target as HTMLInputElement).value
+        if (title.length > 0) {
+          this.product.fetchProducts(1, title).subscribe({
+            next: (value:any) => {
+              this.product.setProduct(value.products)
+              console.log('Products, bro:', value);
+            },
+            error: (err) => {
+              console.error('Error, bro:', err);
+            }
+          });
+        } else {
+          console.log('No title entered yet, bro');
+        }
+      });
   }
   ngOnInit(): void {
     this.cart.getAllCartItemsOfUser().subscribe({
@@ -39,6 +62,7 @@ export class HeaderComponent implements OnInit{
     })
     this.getCartQuantity()
   }
+  
   getCartQuantity(){
     return this.cart.cartItemQuantity()
   }
@@ -53,4 +77,20 @@ export class HeaderComponent implements OnInit{
     this.show.update(prev=>!prev)
   }
  
+  SearchByTitle(event:Event,pageNumber: number = 1){
+    const title = (event.target as HTMLInputElement).value
+    if (title.length > 0) {
+      this.product.fetchProducts(pageNumber, title).subscribe({
+        next: (value:any) => {
+          this.product.setProduct(value.products)
+          console.log('Products, bro:', value);
+        },
+        error: (err) => {
+          console.error('Error, bro:', err);
+        }
+      });
+    } else {
+      console.log('No title entered yet, bro');
+    }
+  }
 }
