@@ -72,12 +72,27 @@ const getAllProducts = async(req,res)=>{
     logger.info("fetch all products started...")
     try {
         const pageNumber = req.query.pageNumber
-        
+        const {title,category,minP,maxP} = req.query
+        console.log(typeof +minP,typeof +maxP)
         const limit = 8
         const skip = (+pageNumber - 1)*limit
         const allProducts = await Product.find()
-        
-        const products = await Product.find({}).sort({'createdAt':-1}).skip(skip).limit(limit).select('-__v')
+
+        const filters = []
+        if (title) {
+            filters.push({ title: new RegExp(title, 'i') });
+        }
+        if (category) {
+            filters.push({ categories: new RegExp(category, 'i') });
+        }
+        if (minP || maxP) { // Check if either is provided
+            const priceFilter = {};
+            if (minP) priceFilter.$gt = +minP;
+            if (maxP) priceFilter.$lt = +maxP;
+            filters.push({ price: priceFilter });
+        }
+        const query = filters.length>0 ? {$and:filters}:{}
+        const products = await Product.find(query).sort({'createdAt':-1}).skip(skip).limit(limit).select('-__v')
         const totalPages = Math.ceil(allProducts.length/limit)
         if (pageNumber > totalPages) {
             return res.status(404).json({
