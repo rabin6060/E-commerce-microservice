@@ -68,4 +68,17 @@ app-root{
   .success-message{
     color: green;
   }
- 
+  .button-nav{
+    width: 100%;
+    background: rgb(136, 136, 247);
+    font-size: 18px;
+    font-weight:500;
+    padding: 15px 20px;
+    cursor: pointer;
+    color: white;
+    border: 1px solid rgb(192, 190, 190);
+    border-radius: 5px;
+    &:hover{
+        background-color: rgb(100, 100, 253);
+    }
+}

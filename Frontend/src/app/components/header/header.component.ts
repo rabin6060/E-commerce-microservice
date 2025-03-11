@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit{
         if (title.length > 0) {
           this.product.fetchProducts(1, title).subscribe({
             next: (value:any) => {
-              this.product.setProduct(value.products)
+              this.product.products.set(value.products)
               console.log('Products, bro:', value);
             },
             error: (err) => {
@@ -46,7 +46,15 @@ export class HeaderComponent implements OnInit{
             }
           });
         } else {
-          console.log('No title entered yet, bro');
+          this.product.fetchProducts(1, null).subscribe({
+            next: (value:any) => {
+              this.product.products.set(value.products)
+              console.log('Products, bro:', value);
+            },
+            error: (err) => {
+              console.error('Error, bro:', err);
+            }
+          });
         }
       });
   }
@@ -62,7 +70,17 @@ export class HeaderComponent implements OnInit{
     })
     this.getCartQuantity()
   }
-  
+  AllProducts(){
+    this.product.fetchProducts(1, null).subscribe({
+      next: (value:any) => {
+        this.product.products.set(value.products)
+        console.log('Products, bro:', value);
+      },
+      error: (err) => {
+        console.error('Error, bro:', err);
+      }
+    });
+  }
   getCartQuantity(){
     return this.cart.cartItemQuantity()
   }
@@ -77,20 +95,5 @@ export class HeaderComponent implements OnInit{
     this.show.update(prev=>!prev)
   }
  
-  SearchByTitle(event:Event,pageNumber: number = 1){
-    const title = (event.target as HTMLInputElement).value
-    if (title.length > 0) {
-      this.product.fetchProducts(pageNumber, title).subscribe({
-        next: (value:any) => {
-          this.product.setProduct(value.products)
-          console.log('Products, bro:', value);
-        },
-        error: (err) => {
-          console.error('Error, bro:', err);
-        }
-      });
-    } else {
-      console.log('No title entered yet, bro');
-    }
-  }
+  
 }

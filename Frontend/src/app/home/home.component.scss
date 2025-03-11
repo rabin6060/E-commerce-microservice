@@ -7,11 +7,18 @@
         display: flex;
         gap: 20px;
         margin: auto;
+        padding-top: 10px;
        
     
         .filter{
+            h2{
+                color: #646464;
+            }
             width: 20%;
             height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         .products{
             width: 75%;

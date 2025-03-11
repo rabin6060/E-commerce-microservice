@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, HostListener, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, effect, ElementRef, HostListener, OnInit, Signal, signal, ViewChild } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { Product } from '../models/product.model';
 import { ProductItemComponent } from "../components/product-item/product-item.component";
@@ -9,29 +9,26 @@ import { ProductItemComponent } from "../components/product-item/product-item.co
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
   pageNumber = signal<number>(1)
-  totalPage ?:number
+  
 
   constructor(private product:ProductService){
-    
+   
+  }
+  ngAfterViewInit() {
+    this.scrollContainer.nativeElement.addEventListener('scroll', this.onScroll.bind(this));
   }
   
-  ngOnInit(): void {
-    this.fetchProducts(this.pageNumber())
-  }
-
-  @HostListener('scroll',['$event'])
-  onScroll(event:Event){
-    const element = this.scrollContainer.nativeElement
-    const atBottom = this.isAtBottom(element)
-    if(atBottom){
-      if (this.totalPage && (this.pageNumber() < this.totalPage)) {
-        this.pageNumber.update(prev=>prev+1)
-        this.fetchProducts(this.pageNumber())
-      }
-     
+  @HostListener('scroll', ['$event'])
+  onScroll(event: Event) {
+    const element = this.scrollContainer.nativeElement;
+    const atBottom = this.isAtBottom(element);
+    const totalPage = this.product.getTotalPages()
+    if (atBottom && totalPage && this.pageNumber() < totalPage) {
+      this.pageNumber.update(prev => prev + 1);
+      this.fetchProducts(this.pageNumber());
     }
   }
   isAtBottom(element:HTMLElement):boolean{
@@ -43,7 +40,7 @@ export class HomeComponent implements OnInit {
   fetchProducts(pageNumber:number){
     this.product.fetchProducts(pageNumber,null).subscribe({
       next:(value:any)=>{
-        this.totalPage = value.totalPages
+      
         this.product.products.update((current:any)=>[...current,...value.products])
       },
       error:(err:any)=> {
@@ -54,5 +51,15 @@ export class HomeComponent implements OnInit {
   }
   Products(){
     return this.product.products()
+  }
+  MyProducts(){
+    this.product.fetchProductOfUser().subscribe({
+      next:(value:any)=>{
+        this.product.products.set(value)
+      },
+      error:(err:any)=> {
+        this.product.products.set(err.error)
+      }
+    })
   }
 }
