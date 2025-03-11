@@ -11,7 +11,6 @@ import { ProductItemComponent } from "../components/product-item/product-item.co
 })
 export class HomeComponent implements OnInit {
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
-  products = signal<Array<Product> | null>([])
   pageNumber = signal<number>(1)
   totalPage ?:number
 
@@ -42,15 +41,18 @@ export class HomeComponent implements OnInit {
     return scrollTop+clientHeight >= scrollHeight - 10
   }
   fetchProducts(pageNumber:number){
-    this.product.fetchProducts(pageNumber).subscribe({
+    this.product.fetchProducts(pageNumber,null).subscribe({
       next:(value:any)=>{
         this.totalPage = value.totalPages
-        this.products.update((current:any)=>[...current,...value.products])
+        this.product.products.update((current:any)=>[...current,...value.products])
       },
       error:(err:any)=> {
-        this.products.set(err.error)
+        this.product.products.set(err.error)
       }
     }
     )
+  }
+  Products(){
+    return this.product.products()
   }
 }
