@@ -13,7 +13,7 @@ export class ProductService {
   loading = signal<boolean>(false)
   products = signal<Product[] | null>([])
   constructor(private http:HttpClient) {
-    this.fetchProducts(1, null).subscribe({
+    this.fetchProducts(1, null,null,null).subscribe({
       next: (value: any) => {
         this.products.set(value.products); // Set initial products
         this.totalPage.set(value.totalPages); // Store total pages if needed
@@ -23,7 +23,7 @@ export class ProductService {
    }
 
   
-  fetchProducts(pageNumber:number | null,title:string | null ){
+  fetchProducts(pageNumber:number | null,title:string | null,category:string | null ,price: {minP:number,maxP:number} | null ){
     const baseUrl = 'http://localhost:3000/v1/product';
     let url = `${baseUrl}?pageNumber=${pageNumber || 1}`;
     
@@ -31,7 +31,12 @@ export class ProductService {
     if (title && title.length > 0) {
       url += `&title=${encodeURIComponent(title)}`;
     }
-
+    if (category){
+      url += `&category=${encodeURIComponent(category)}`
+    }
+    if (price){
+      url += `&minP=${price.minP}&maxP=${price.maxP}`
+    }
     return this.http.get(url, {
       headers: {
         'Content-Type': 'application/json'
