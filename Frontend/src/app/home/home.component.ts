@@ -38,7 +38,7 @@ export class HomeComponent {
     return scrollTop+clientHeight >= scrollHeight - 10
   }
   fetchProducts(pageNumber:number){
-    this.product.fetchProducts(pageNumber,null).subscribe({
+    this.product.fetchProducts(pageNumber,null,null,null).subscribe({
       next:(value:any)=>{
       
         this.product.products.update((current:any)=>[...current,...value.products])
@@ -60,6 +60,35 @@ export class HomeComponent {
       error:(err:any)=> {
         this.product.products.set(err.error)
       }
+    })
+  }
+  handlePrice(){
+    const selectItem1 = document.getElementById('min') as HTMLInputElement
+    const minP =selectItem1.value
+    const selectItem2 = document.getElementById('max') as HTMLInputElement
+    const maxP =selectItem2.value
+    console.log(minP,maxP)
+
+    this.product.fetchProducts(1,null,null,{minP:+minP,maxP:+maxP}).subscribe({
+      next:(value:any)=>{
+        this.product.products.set(value.products)
+      },
+      error:(err)=> {
+        console.log(err.error)
+      },
+    })
+  }
+
+  handleProduct(){
+    const selectItem = document.getElementById('Categories') as HTMLSelectElement
+    const category =selectItem && selectItem.value
+    this.product.fetchProducts(1,null,category,null).subscribe({
+      next:(value:any)=>{
+        this.product.products.set(value.products)
+      },
+      error:(err)=> {
+        console.log(err.error)
+      },
     })
   }
 }
