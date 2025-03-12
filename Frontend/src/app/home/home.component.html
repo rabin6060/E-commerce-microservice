@@ -5,12 +5,30 @@
             <hr>
             <button class="button-nav" (click)="MyProducts()">My Products</button>
             <div class="filter-item">
-                <div>
-                    Categories
-                </div>
-                <div>
-                    Price
-                </div>
+                <form>
+                    <div>
+                        <h2>Categories</h2>
+                        <select name="Categories" id="Categories" (change)="handleProduct()" >
+                            <option value="Electronics">Electronics</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Books">Books</option>
+                            <option value="Clothes">Clothes</option>
+                        </select>
+                    </div>
+                    <div class="price">
+                        <h2>Price</h2>
+                        <div>
+                            <label for="min-price">Minimun</label>
+                            <input type="number" name="price" id="min" [defaultValue]="0">
+                        </div>
+                        <div>
+                            <label for="max-price">Maximum</label>
+                            <input type="number" name="price" id="max" [defaultValue]="100000">
+                        </div>
+                        <button class="button-nav" type="button" (click)="handlePrice()">Search</button>
+                        
+                    </div>
+                </form>
             </div>
             
         </div>
