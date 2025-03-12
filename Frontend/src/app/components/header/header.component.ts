@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit{
       .subscribe((event: Event) => {
         const title = (event.target as HTMLInputElement).value
         if (title.length > 0) {
-          this.product.fetchProducts(1, title).subscribe({
+          this.product.fetchProducts(1, title,null,null).subscribe({
             next: (value:any) => {
               this.product.products.set(value.products)
               console.log('Products, bro:', value);
@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit{
             }
           });
         } else {
-          this.product.fetchProducts(1, null).subscribe({
+          this.product.fetchProducts(1, null,null,null).subscribe({
             next: (value:any) => {
               this.product.products.set(value.products)
               console.log('Products, bro:', value);
@@ -71,7 +71,7 @@ export class HeaderComponent implements OnInit{
     this.getCartQuantity()
   }
   AllProducts(){
-    this.product.fetchProducts(1, null).subscribe({
+    this.product.fetchProducts(1, null,null,null).subscribe({
       next: (value:any) => {
         this.product.products.set(value.products)
         console.log('Products, bro:', value);
