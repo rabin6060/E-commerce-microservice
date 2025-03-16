@@ -43,13 +43,13 @@ const addOrder = async(req,res)=>{
             payment_method_types:['card'],
             mode:'payment',
             line_items:lineItems,
-            success_url: `http://localhost:4000/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `http://localhost:4000/cancel`,
+            success_url: `http://localhost:4200/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `http://localhost:4200/cancel`,
             metadata: { orderId: order._id.toString() },
 
         })
         res.status(201).json({
-            success:true,
+            success:true, 
             order,
             session_id:session.id
         })
@@ -65,13 +65,16 @@ const addOrder = async(req,res)=>{
 const success = async(req,res)=>{
     logger.info("stripe order status started..")
     try {
-        const sessionId = req.query.sessioId
+        const sessionId = req.query.sessionId
         const session = await stripe.checkout.sessions.retrieve(sessionId)
         const orderId = session.metadata.orderId
 
         await Order.findByIdAndUpdate(orderId,{status:'paid'})
         logger.info("payment successfull")
-        res.send('Payment successful! Order ID: ' + orderId);
+        res.json({
+            success:true,
+            message:"order placed success"
+        });
     } catch (error) {
         logger.error("order place status change failed",error)
         return res.status(500).json({
@@ -81,7 +84,7 @@ const success = async(req,res)=>{
     }
 }
 const cancel = async(req,res)=>{
-    logger.info("payment cance")
+    logger.info("payment cancel")
     return res.json({
         success:false,
         message:"payment cancelled"
