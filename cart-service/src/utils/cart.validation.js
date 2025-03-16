@@ -10,10 +10,12 @@ const cartValidation = (data,existingCartItem=[]) => {
               (item) => item.productId === value
             );
             if (isDuplicate) {
-              return helpers.message( 'productId must be unique in the cart')
+              return helpers.message( 'product already exist. Please check your cart')
             }
             return value; // Return the value if valid
           }, 'unique productId check'),
+          title:joi.string().required(),
+          imageUrl:joi.string().required(),
         price:joi.number().required(),
         quantity:joi.number().required(),
         

@@ -4,14 +4,16 @@
   "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node src/server.js",
-    "dev":"nodemon src/server.js"
+    "docker": "sudo docker-compose up -d ",
+    "start": "node src/server.js",
+    "dev": "npm run docker && sleep 1 && nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-http-proxy": "^2.1.1",
