@@ -3,6 +3,7 @@ const {userRegisterValidation, loginValidation} = require('../utils/user.registe
 const User = require('../models/user.models')
 const { upload, deleteImage } = require("../utils/cloudinary")
 const { generateToken } = require("../utils/generateToken")
+const { publish } = require("../utils/rabbitmq.connection")
 
 
 
@@ -32,8 +33,9 @@ const register = async(req,res,next)=>{
         }
         const result = await upload(req.file)
         
-       const newuser = await User.create({...req.body,profilePic:result.secure_url,profilePicId:result.public_id}).select('-password -accessToken -__v')
-       res.status(200).json({success:true,newuser})
+       const newuser = await User.create({...req.body,profilePic:result.secure_url,profilePicId:result.public_id})
+       
+       res.status(200).json({success:true,newuser,message:"User Register Successfully"})
     } catch (error) {
         logger.error('registration failed',error.message)
         next(error)
@@ -71,8 +73,10 @@ const login = async(req,res,next)=>{
      }
         const {accessToken} = generateToken(user)
         user.accessToken = accessToken
+        
         await user.save()
-       res.status(200).json({success:true,accessToken:accessToken,message:'login successfully'})
+        await publish('user_created',{userId:user?._id.toString()})
+       res.status(200).json({success:true,user:user,message:'login successfully'})
     } catch (error) {
         logger.error('login failed',error.message)
         next(error)
@@ -143,7 +147,7 @@ const getme = async(req,res,next)=>{
 const editUserProfile = async(req,res)=>{
     logger.info("user edit started...")
     try {
-        const user = await User.findById(req.user.userId).select('-password -accessToken -__v')
+        const user = await User.findById(req.user.userId).select('-password -__v')
             if (!user) {
                 return res.status(400).json({
                     success:false,

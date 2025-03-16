@@ -9,6 +9,7 @@ const Redis = require('ioredis')
 const { RedisStore} = require('rate-limit-redis')
 const userRouter = require('./routes/user.routes')
 const { dbConnection } = require('./utils/db.connection')
+const { rabbitConnection } = require('./utils/rabbitmq.connection')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -51,8 +52,9 @@ app.use((req,res,next)=>{
 app.use('/api/auth',userRouter)
 
 
-app.listen(port,()=>{
+app.listen(port,async()=>{
     dbConnection()
+    await rabbitConnection()
     logger.info(`user-service server running at port ${process.env.PORT}`)
 })
 
