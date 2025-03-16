@@ -73,7 +73,7 @@ const getAllProducts = async(req,res)=>{
     try {
         const pageNumber = req.query.pageNumber
         const {title,category,minP,maxP} = req.query
-        console.log(typeof +minP,typeof +maxP)
+        
         const limit = 8
         const skip = (+pageNumber - 1)*limit
         const allProducts = await Product.find()

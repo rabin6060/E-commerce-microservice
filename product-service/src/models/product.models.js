@@ -19,6 +19,7 @@ const schema = new mongoose.Schema({
     title:{
         type:String,
         required:true,
+        index:true,
         trim:true
     },
     desc:{
@@ -28,7 +29,7 @@ const schema = new mongoose.Schema({
     },
     categories:[{
         type:String,
-        required:true
+        required:true,
     }],
     imageUrls:[imageSchema],
     price:{
@@ -47,7 +48,6 @@ const schema = new mongoose.Schema({
     },
     
 },{timestamps:true})
-
 
 
 const productModel = mongoose.model('Product',schema)

@@ -9,7 +9,8 @@ const Redis = require('ioredis')
 const { RedisStore} = require('rate-limit-redis')
 const productRouter = require('./routes/product.routes')
 const { dbConnection } = require('./utils/db.connection')
-const { rabbitConnection } = require('./utils/rabbitmq.connection')
+const { rabbitConnection, consumeCartInfo, consumeUserInfo } = require('./utils/rabbitmq.connection')
+const { handleProductStock } = require('./events/handleProductStock')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -51,10 +52,12 @@ app.use((req,res,next)=>{
 
 app.use('/api/product',productRouter)
 
-
 app.listen(port,async ()=>{
     await dbConnection()
     await rabbitConnection()
+    await consumeUserInfo('user_created')
+    await consumeCartInfo('cart_created',handleProductStock)
+    await consumeCartInfo('cart_updated',handleProductStock)
     logger.info(`product-service server running at port ${process.env.PORT}`)
 })
 

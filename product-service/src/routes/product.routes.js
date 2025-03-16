@@ -3,6 +3,7 @@ const { createProduct, getAllProducts, getSingleProductById, deleteProduct, getP
 const { multerMiddleware } = require('../middlewares/multer');
 
 
+
 const router = express.Router();
 
 router.post('/',multerMiddleware,createProduct)
